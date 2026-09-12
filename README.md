@@ -29,6 +29,22 @@ Then visit `http://localhost:8420`.
    containing `index.html` (root, or `/docs` if you move it there).
 3. GitHub Pages serves static files directly, so no build step is needed.
 
+## Downloads
+
+The Arduino App Lab project this guide's software steps are based on
+(`injector.py`, the HID Bridge web UI, the sketch) is published as a
+[GitHub Release](https://github.com/charlesbones/arcade-bundle/releases)
+asset rather than tracked in the repo, to keep the git history free of
+binaries. A stable link that always resolves to the latest release's copy:
+
+```
+https://github.com/charlesbones/arcade-bundle/releases/latest/download/modulino-hid-bridge-arcade-machine.zip
+```
+
+To publish a new version of it: tag a release (see below), then attach
+`modulino-hid-bridge-arcade-machine.zip` as a release asset — the link
+above keeps working as long as the filename stays the same.
+
 ## Project structure
 
 ```
@@ -65,6 +81,18 @@ live in `js/steps.js` as a plain array — no HTML templating system, just
 edit the strings. Each step can optionally include a `viewer` block
 (`show`/`highlight`/`dim` part keys + a camera preset) to control the 3D
 scene, or omit it entirely for a text-only step.
+
+## Cutting a release
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Then on GitHub: **Releases → Draft a new release**, pick the `v1.0.0` tag,
+give it a title, drag in `modulino-hid-bridge-arcade-machine.zip` under
+**Attach binaries**, and **Publish release**. Bump the tag (`v1.0.1`, …) and
+repeat whenever the App Lab project changes.
 
 ## Credits
 

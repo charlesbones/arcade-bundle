@@ -51,7 +51,9 @@ export const STEPS = [
       <ol>
         <li>Connect the board to your Wi-Fi/network.</li>
         <li>Create a <strong>password</strong> for the board &mdash; you'll need it again later.</li>
-        <li>Download the complete project from the <strong>Arduino App Lab</strong> section of the original tutorial.</li>
+        <li>Download the project zip &mdash;
+          <a href="https://github.com/charlesbones/arcade-bundle/releases/latest/download/modulino-hid-bridge-arcade-machine.zip">modulino-hid-bridge-arcade-machine.zip</a>
+          (mirrored from the <strong>Arduino App Lab</strong> section of the original tutorial).</li>
         <li>Open <strong>Arduino App Lab</strong> and go to <strong>My Apps</strong>.</li>
         <li>Click <strong>Create New App (+)</strong> and import the downloaded project.</li>
       </ol>
