@@ -366,6 +366,23 @@ main.content {
 .chip-btn:hover { border-color: var(--accent); }
 .chip-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin: 4px 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+.dl-btn:hover { background: var(--accent); color: #fff; }
+.dl-btn .size { font-weight: 400; opacity: .75; font-size: 12px; }
+
 .legend {
   margin-top: 12px;
   font-size: 12px;
