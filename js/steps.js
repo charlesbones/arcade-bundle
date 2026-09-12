@@ -74,6 +74,7 @@ export const STEPS = [
       highlight: ['base', 'buttonPad', 'cover'],
       camera: WIDE_CAM,
     },
+    alt: 'The three printed enclosure parts — Base, Button Pad and Cover — shown together at an angle. Use the Assembled/Exploded toggle above the viewer to space them apart and see how they stack.',
     body: `
       <p>The enclosure is three printed parts that snap around the electronics. Here's everything the
       official build calls for.</p>
@@ -121,6 +122,7 @@ export const STEPS = [
       camera: WIDE_CAM,
     },
     checklist: ['4× 5 cm Qwiic cables'],
+    alt: 'Four circuit boards floating side by side, all highlighted: the UNO Q, then Modulino Buttons, Modulino Movement and Modulino Joystick, in the order they get cabled together.',
     body: `
       <p>Before anything gets screwed down, connect the UNO Q and the three Modulino nodes with Qwiic
       cables <strong>in this exact order</strong>:</p>
@@ -144,6 +146,7 @@ export const STEPS = [
       camera: DEFAULT_CAM,
     },
     checklist: ['2× M3×6 flathead screws'],
+    alt: 'The UNO Q board, highlighted in green, centered on top of the grey plastic Base, which is faded to show it is already in place.',
     body: `
       <p>Screw the UNO Q to the <strong>center of the Base</strong> using 2 M3×6 flathead screws.</p>
       <div class="callout warn">
@@ -168,6 +171,7 @@ export const STEPS = [
       camera: RIGHT_CAM,
     },
     checklist: ['2× M3×6 flathead screws (upper holes)'],
+    alt: 'The Modulino Buttons module, highlighted in blue, on the right side of the Base, next to the faded UNO Q board and Base.',
     body: `
       <p>Screw the Modulino Buttons to the Base <strong>with the LEDs facing the UNO Q</strong>, using
       2 M3×6 screws in the upper holes.</p>
@@ -184,6 +188,7 @@ export const STEPS = [
       highlight: ['buttonPad'],
       camera: { pos: [110, -140, 130], target: [60, -17, 10] },
     },
+    alt: 'A close-up of the teal Button Pad part on its own, angled to show its two thin, bendable spacer tabs.',
     body: `
       <p>The Button Pad prints with two integrated spacers. Bend both of them
       <strong>downward along their weak (thin) line</strong> so they'll clip around the Buttons module
@@ -208,6 +213,7 @@ export const STEPS = [
       camera: RIGHT_CAM,
     },
     checklist: ['2× M3×10 flathead screws'],
+    alt: 'The teal Button Pad, highlighted, fitted over the Modulino Buttons module, with the Base, UNO Q and Buttons faded underneath.',
     body: `
       <p>Place the Button Pad over the Modulino Buttons and screw it down through its two bent spacers.</p>
       <div class="callout warn">
@@ -230,6 +236,7 @@ export const STEPS = [
       dim: ['base', 'unoQ', 'modButtons', 'buttonPad'],
       camera: CENTER_BACK_CAM,
     },
+    alt: 'The orange Modulino Movement board, highlighted, standing upright in a slot toward the back of the Base, with everything placed so far shown faded.',
     body: `
       <p>Insert the Modulino Movement <strong>vertically</strong> into its slot in the Base, with the
       Qwiic receptacles facing inward (toward the UNO Q).</p>
@@ -248,6 +255,7 @@ export const STEPS = [
       camera: LEFT_CAM,
     },
     checklist: ['Screws for the Joystick mount'],
+    alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base, with everything placed so far shown faded.',
     body: `
       <p>Screw the Modulino Joystick in on the <strong>left side</strong> of the Base. Double-check the
       little XY-axis graphic printed on the joystick module lines up the way you expect before you
@@ -267,6 +275,11 @@ export const STEPS = [
       camera: TOP_CAM,
     },
     checklist: ['Cover fasteners'],
+    alt: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
+    altVariants: {
+      cover: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
+      coverTies: 'A top-down view of the highlighted Cover-with-ties variant fitted onto the Base, showing its two extra flat tie tabs extending past the edge, not yet bent around the power cable.',
+    },
     body: `
       <p>Screw the Cover onto the Base. The Button Pad pokes up through a cutout in the Cover, so it
       stays clickable while everything else is sealed underneath.</p>
@@ -285,6 +298,11 @@ export const STEPS = [
       camera: TOP_CAM,
     },
     checklist: ['M3×6 screws (one of the two bottom holes)'],
+    alt: 'A top-down view of the highlighted Cover-with-ties variant fitted onto the Base, showing its two extra flat tie tabs extending past the edge, not yet bent around the power cable.',
+    altVariants: {
+      cover: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
+      coverTies: 'A top-down view of the highlighted Cover-with-ties variant fitted onto the Base, showing its two extra flat tie tabs extending past the edge, not yet bent around the power cable.',
+    },
     body: `
       <p>If you printed the alternate <strong>Cover with ties</strong> variant instead of the plain
       Cover, bend the two printed ties around the UNO Q's USB-C power dongle/cable and screw them down
@@ -512,6 +530,7 @@ systemctl --user start hid-injector.service retro-launcher.service</pre>
       highlight: ['base', 'buttonPad', 'cover'],
       camera: WIDE_CAM,
     },
+    alt: 'The finished enclosure — Base, Button Pad and Cover — shown fully assembled together.',
     body: `
       <p style="text-align:center;font-size:40px;margin:6px 0;">🕹️</p>
       <p style="text-align:center;font-size:18px;font-weight:700;">Your UNO Q arcade machine is ready.</p>

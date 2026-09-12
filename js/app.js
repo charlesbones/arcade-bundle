@@ -47,6 +47,7 @@ const els = {
   viewerCanvas: document.getElementById('viewerCanvas'),
   viewerToolbar: document.getElementById('viewerToolbar'),
   viewerLegend: document.getElementById('viewerLegend'),
+  viewerAlt: document.getElementById('viewerAlt'),
   approxBadge: document.getElementById('approxBadge'),
   chipRow: document.getElementById('chipRow'),
   navPrev: document.getElementById('navPrev'),
@@ -133,6 +134,28 @@ function renderChips(step) {
   }
 }
 
+/**
+ * Text description of what the 3D scene currently shows, for screen-reader
+ * users (a <canvas> has no inherent accessible content of its own). Picks
+ * the cover-variant-specific wording when the step has one, and appends an
+ * optional note about a toggle state (exploded view, etc).
+ */
+function describeStep(step, extra) {
+  const variant = state.coverVariant[step.id];
+  let text = step.alt || '3D model preview for this step.';
+  if (step.altVariants && variant && step.altVariants[variant]) {
+    text = step.altVariants[variant];
+  }
+  return extra ? `${text} ${extra}` : text;
+}
+
+function setViewerAlt(text) {
+  els.viewerCanvas.setAttribute('aria-label', text);
+  // aria-live region: proactively announces the change (e.g. after a toggle
+  // click), since updating a plain aria-label doesn't announce on its own.
+  els.viewerAlt.textContent = text;
+}
+
 function resolveShow(step, list) {
   const variant = state.coverVariant[step.id];
   if (!variant) return list;
@@ -164,12 +187,14 @@ function renderViewerToolbar(step) {
       v.setExplode(false);
       assembledBtn.classList.add('active');
       explodedBtn.classList.remove('active');
+      setViewerAlt(describeStep(step));
     });
     explodedBtn.addEventListener('click', () => {
       state.exploded = true;
       v.setExplode(true);
       explodedBtn.classList.add('active');
       assembledBtn.classList.remove('active');
+      setViewerAlt(describeStep(step, 'Currently shown exploded, with the parts spaced apart to see how they stack.'));
     });
     els.viewerToolbar.appendChild(assembledBtn);
     els.viewerToolbar.appendChild(explodedBtn);
@@ -233,7 +258,9 @@ async function applyStepToViewer(step) {
     dim: resolveShow(step, cfg.dim || []),
     camera: cfg.camera,
   });
-  v.setExplode(step.id === 'overview' ? state.exploded : false);
+  const exploded = step.id === 'overview' ? state.exploded : false;
+  v.setExplode(exploded);
+  setViewerAlt(describeStep(step, exploded ? 'Currently shown exploded, with the parts spaced apart to see how they stack.' : null));
   // trigger a resize in case layout just changed visibility
   window.dispatchEvent(new Event('resize'));
 }

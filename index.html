@@ -44,11 +44,15 @@
 
       <div class="viewer-col" id="viewerCol">
         <div class="viewer-box">
-          <canvas id="viewerCanvas"></canvas>
-          <div class="viewer-hint">Drag to orbit · Scroll to zoom</div>
+          <canvas id="viewerCanvas" role="img" aria-label="3D model preview"></canvas>
+          <div class="viewer-hint" aria-hidden="true">Drag to orbit · Scroll to zoom</div>
         </div>
         <div class="viewer-toolbar" id="viewerToolbar"></div>
         <div class="legend" id="viewerLegend"></div>
+        <!-- Mirrors the canvas's aria-label and announces it (and later
+             changes from the Exploded/Cover-variant toggles) to screen
+             readers, since a canvas isn't a live region on its own. -->
+        <div id="viewerAlt" class="sr-only" aria-live="polite" role="status"></div>
       </div>
     </div>
 
