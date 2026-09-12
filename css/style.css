@@ -17,6 +17,7 @@
   --code-bg: #1e1d1a;
   --code-text: #f1efe6;
   --viewer-bg: #dedad0;
+  --panel-glass: rgba(255,255,255,0.86);
   --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
   --radius: 10px;
   color-scheme: light;
@@ -42,6 +43,7 @@
     --code-bg: #0f1112;
     --code-text: #e9e7dd;
     --viewer-bg: #26292c;
+    --panel-glass: rgba(24,26,29,0.82);
     --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
     color-scheme: dark;
   }
@@ -66,6 +68,7 @@
   --code-bg: #0f1112;
   --code-text: #e9e7dd;
   --viewer-bg: #26292c;
+  --panel-glass: rgba(24,26,29,0.82);
   --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
   color-scheme: dark;
 }
@@ -144,6 +147,31 @@ header.topbar .spacer { flex: 1; }
 .menu-btn { display: none; }
 @media (max-width: 880px) {
   .menu-btn { display: flex; }
+}
+
+.layout-switch {
+  display: flex;
+  gap: 2px;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 2px;
+}
+.layout-switch button {
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 100px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.layout-switch button:hover { color: var(--text); }
+.layout-switch button.active { background: var(--accent); color: #fff; }
+@media (max-width: 640px) {
+  .layout-switch button span.full { display: none; }
 }
 
 /* ---------- Sidebar ---------- */
@@ -494,3 +522,132 @@ footer.credits {
   line-height: 1.6;
 }
 footer.credits a { color: var(--accent-strong); }
+
+/* =====================================================================
+   Layout variants -- "Split" (default, rules above) / "Hero" / "Immersive"
+   Same DOM throughout; these rules just reposition it. Chosen in the
+   header's layout-switch control and remembered per-browser.
+   ===================================================================== */
+
+/* ---------- Hero: big top banner, text below ---------- */
+#app[data-layout="hero"] .layout-with-viewer {
+  grid-template-columns: 1fr;
+}
+#app[data-layout="hero"] .viewer-col {
+  order: -1;
+  position: static;
+}
+#app[data-layout="hero"] .viewer-box {
+  aspect-ratio: auto;
+  height: 54vh;
+}
+#app[data-layout="hero"] .viewer-toolbar,
+#app[data-layout="hero"] .legend {
+  justify-content: center;
+}
+#app[data-layout="hero"] .legend { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 16px; }
+@media (max-width: 700px) {
+  #app[data-layout="hero"] .viewer-box { height: 42vh; }
+}
+
+/* ---------- Immersive: full-bleed 3D behind a floating glass card ---------- */
+#app[data-layout="immersive"] .layout-with-viewer {
+  grid-template-columns: 1fr;
+  position: relative;
+}
+#app[data-layout="immersive"] .viewer-col {
+  position: fixed;
+  inset: 55px 0 0 0;
+  z-index: 1;
+}
+#app[data-layout="immersive"] .viewer-box {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  border: none;
+}
+#app[data-layout="immersive"] .viewer-toolbar {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  margin: 0;
+  z-index: 2;
+}
+#app[data-layout="immersive"] .legend {
+  /* bottom-right is where the glass card sits, so stack this above the
+     toolbar on the left instead of hiding underneath the card */
+  position: absolute;
+  bottom: 58px;
+  left: 18px;
+  margin: 0;
+  z-index: 2;
+  flex-direction: row;
+  gap: 14px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+#app[data-layout="immersive"] main.content {
+  position: relative;
+  z-index: 2;
+  max-width: 440px;
+  margin: 16px 16px 16px auto;
+  height: calc(100% - 32px);
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+@media (max-width: 820px) {
+  #app[data-layout="immersive"] main.content {
+    max-width: none;
+    margin: 12px;
+  }
+}
+/* main.content's other children are static (non-positioned), so without an
+   explicit stacking order the fixed, viewport-covering .viewer-col -- despite
+   its lower z-index -- would still paint over them (positioned elements
+   always paint above static ones in the same stacking context). Promote the
+   text content above it explicitly. */
+#app[data-layout="immersive"] #stepHeader,
+#app[data-layout="immersive"] #chipRow,
+#app[data-layout="immersive"] .prose-col,
+#app[data-layout="immersive"] #doneToggle,
+#app[data-layout="immersive"] .step-nav,
+#app[data-layout="immersive"] footer.credits {
+  position: relative;
+  z-index: 3;
+}
+
+/* Sidebar becomes an on-demand drawer (like mobile) in Hero/Immersive at any
+   viewport width, since the 3D view is meant to dominate the screen. */
+#app[data-layout="hero"] .menu-btn,
+#app[data-layout="immersive"] .menu-btn {
+  display: flex;
+}
+#app[data-layout="hero"],
+#app[data-layout="immersive"] {
+  /* single-column shell: default areas ("header header"/"sidebar main") need
+     2 columns, and leaving that mismatched against a 1-column track list
+     gives `main` an implicit, content-sized (not full-width) column. */
+  grid-template-columns: 1fr;
+  grid-template-areas: "header" "main";
+}
+#app[data-layout="hero"] nav.sidebar,
+#app[data-layout="immersive"] nav.sidebar {
+  position: fixed;
+  top: 55px; bottom: 0; left: 0;
+  width: 82%;
+  max-width: 320px;
+  transform: translateX(-100%);
+  transition: transform .2s ease;
+  z-index: 31;
+}
+#app[data-layout="hero"] nav.sidebar.open,
+#app[data-layout="immersive"] nav.sidebar.open {
+  transform: translateX(0);
+}
