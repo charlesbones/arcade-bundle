@@ -62,6 +62,18 @@ export const STEPS = [
           for other versions.
         </li>
         <li>Open <strong>Arduino App Lab</strong> and go to <strong>My Apps</strong>.</li>
+        <!-- TODO(gif): this step is a good candidate for a short screen
+             recording -- clicking the "+" in My Apps, picking the
+             downloaded zip in the import dialog, and the new app appearing
+             in the list. When a real .gif/.webp exists for it, drop it in
+             as:
+               <img src="media/applab-import.gif" alt="ALT_TEXT">
+             Draft alt text ready to use:
+             "Screen recording of Arduino App Lab: clicking the plus icon
+             in the My Apps view, choosing the downloaded
+             modulino-hid-bridge-arcade-machine.zip in the file picker, and
+             the new 'Modulino HID bridge (Arcade Machine)' app appearing
+             in the My Apps list." -->
         <li>Click <strong>Create New App (+)</strong> and import the downloaded project.</li>
       </ol>
       <div class="callout tip">
