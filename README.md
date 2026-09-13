@@ -94,6 +94,15 @@ give it a title, drag in `modulino-hid-bridge-arcade-machine.zip` under
 **Attach binaries**, and **Publish release**. Bump the tag (`v1.0.1`, …) and
 repeat whenever the App Lab project changes.
 
+## Related
+
+This guide's engine (the 3D viewer, layouts, navigation, accessibility
+wiring) has been generalized into a reusable platform for other hardware
+kits: [`uno-q-bundle-viewer`](https://github.com/charlesbones/uno-q-bundle-viewer).
+This repo stays the canonical, independently-maintained version of this
+specific guide; that one hosts a copy as a worked example alongside any
+future guides.
+
 ## Credits
 
 - Guide content adapted from Arduino's UNO Q Arcade Bundle tutorial by
