@@ -97,11 +97,11 @@ repeat whenever the App Lab project changes.
 ## Related
 
 This guide's engine (the 3D viewer, layouts, navigation, accessibility
-wiring) has been generalized into a reusable platform for other hardware
-kits: [`uno-q-bundle-viewer`](https://github.com/charlesbones/uno-q-bundle-viewer).
-This repo stays the canonical, independently-maintained version of this
-specific guide; that one hosts a copy as a worked example alongside any
-future guides.
+wiring) has been generalized into a reusable internal platform for
+building similar guides for other hardware kits, including
+[`diy-synth`](https://github.com/charlesbones/diy-synth). This repo stays
+the canonical, independently-maintained, standalone version of this
+specific guide.
 
 ## Credits
 
