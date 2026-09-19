@@ -3,79 +3,29 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // ---------------------------------------------------------------------------
-// Part registry
+// This file is shared by every project on the platform -- it knows nothing
+// about any specific kit's parts. Each project supplies its own PARTS
+// registry (see projects/*/parts.js) shaped like:
 //
-// "enclosure" parts (base, button-pad, cover, cover-with-ties) were exported
-// together from one assembly, so their coordinates already line up perfectly.
-// "electronics" parts (uno-q, modulino-*) come from Arduino's separate STEP
-// downloads and are placed here at approximate, hand-picked positions that
-// match the written instructions (center of base, left side, etc). They are
-// for visual reference only -- see the note shown on those steps.
+//   {
+//     <key>: {
+//       file: 'models/thing.stl',       // path relative to that project's index.html
+//       color: 0xrrggbb,
+//       exact: true,                    // true: parts from one shared assembly
+//                                        //   export, already mutually aligned --
+//                                        //   used as-is with no transform.
+//                                        // false: independently-sourced model
+//                                        //   (e.g. a vendor's separate CAD
+//                                        //   export) that needs hand-placing.
+//       transform: { pos:[x,y,z], rot:[rx,ry,rz] },  // target placement (non-exact only)
+//       local: { centerXY:[x,y], minZ }, // that model's own bbox, used to
+//                                        // align its bottom face + XY center
+//                                        // onto `transform.pos` (non-exact only)
+//       explodeLift: 30,                 // optional: Z offset for "exploded" view (exact parts only)
+//     },
+//     ...
+//   }
 // ---------------------------------------------------------------------------
-
-const PARTS = {
-  base: {
-    file: 'models/base.stl',
-    exact: true,
-    color: 0xcfcac0,
-    transform: null,
-  },
-  buttonPad: {
-    file: 'models/button-pad.stl',
-    exact: true,
-    color: 0x2f8f8a,
-    transform: null,
-  },
-  cover: {
-    file: 'models/cover.stl',
-    exact: true,
-    color: 0xe4e0d4,
-    transform: null,
-  },
-  coverTies: {
-    file: 'models/cover-with-ties.stl',
-    exact: true,
-    color: 0xe4e0d4,
-    transform: null,
-  },
-  unoQ: {
-    file: 'models/uno-q.stl',
-    exact: false,
-    color: 0x1c7a3e,
-    // "screw the UNO Q to the center of the base"
-    transform: { pos: [0, -10, 13], rot: [0, 0, 0] },
-  },
-  modButtons: {
-    file: 'models/modulino-buttons.stl',
-    exact: false,
-    color: 0x2f6fb0,
-    // footprint of the real Button Pad part (39.36..82.35, -39.02..3.97)
-    transform: { pos: [60.85, -17.5, 13], rot: [0, 0, 0] },
-  },
-  modMovement: {
-    file: 'models/modulino-movement.stl',
-    exact: false,
-    color: 0xb0562f,
-    // "inserted vertically into the slot" -- stood up, mid-board
-    transform: { pos: [-5, 18, 13], rot: [Math.PI / 2, 0, 0] },
-  },
-  modJoystick: {
-    file: 'models/modulino-joystick.stl',
-    exact: false,
-    color: 0x8a2fb0,
-    // "screwed in on the left side"
-    transform: { pos: [-55, -17.5, 13], rot: [0, 0, 0] },
-  },
-};
-
-// bbox-derived local centers/min-z used to align each electronics part's
-// bottom face + XY center onto its target position above.
-const LOCAL_INFO = {
-  unoQ: { centerXY: [-431.08, 110.97], minZ: 10.93 },
-  modButtons: { centerXY: [20.5, 12.68], minZ: -1.61 },
-  modMovement: { centerXY: [20.5, 12.68], minZ: -1.61 },
-  modJoystick: { centerXY: [20.5, 13.17], minZ: -3.7 },
-};
 
 const cache = new Map(); // file -> THREE.BufferGeometry
 const loader = new STLLoader();
@@ -97,20 +47,31 @@ function loadGeometry(file) {
 }
 
 export class AssemblyViewer {
-  constructor(canvas) {
+  /**
+   * @param canvas   the <canvas> element to render into
+   * @param parts    this project's PARTS registry (see the module doc above)
+   * @param options  optional overrides:
+   *                   initialCamera: {pos:[x,y,z], target:[x,y,z]}
+   *                   backgroundVar: CSS custom property to read the
+   *                     viewer's background color from (default --viewer-bg)
+   */
+  constructor(canvas, parts, options = {}) {
     this.canvas = canvas;
+    this.parts = parts || {};
+    this.backgroundVar = options.backgroundVar || '--viewer-bg';
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--viewer-bg').trim() || '#ddd8cc');
+    this.scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue(this.backgroundVar).trim() || '#ddd8cc');
 
+    const initCam = options.initialCamera || {};
     this.camera = new THREE.PerspectiveCamera(38, 1, 1, 5000);
     this.camera.up.set(0, 0, 1); // STL data is Z-up (board plane = XY, height = Z)
-    this.camera.position.set(180, -260, 200);
+    this.camera.position.set(...(initCam.pos || [180, -260, 200]));
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target.set(0, -10, 5);
+    this.controls.target.set(...(initCam.target || [0, -10, 5]));
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.08;
     this.controls.minDistance = 40;
@@ -138,7 +99,7 @@ export class AssemblyViewer {
     // while the page is open (initial color was read at construction time)
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const syncBg = () => this.setBackground(
-      getComputedStyle(document.documentElement).getPropertyValue('--viewer-bg').trim() || '#ddd8cc'
+      getComputedStyle(document.documentElement).getPropertyValue(this.backgroundVar).trim() || '#ddd8cc'
     );
     mq.addEventListener('change', syncBg);
 
@@ -163,7 +124,8 @@ export class AssemblyViewer {
 
   async _ensureMesh(key) {
     if (this.meshes[key]) return this.meshes[key];
-    const def = PARTS[key];
+    const def = this.parts[key];
+    if (!def) throw new Error(`Unknown part "${key}" -- check this project's parts.js`);
     const geometry = await loadGeometry(def.file);
     const material = new THREE.MeshStandardMaterial({
       color: def.color,
@@ -176,7 +138,7 @@ export class AssemblyViewer {
     mesh.userData.baseColor = def.color;
 
     if (!def.exact) {
-      const info = LOCAL_INFO[key];
+      const info = def.local;
       const t = def.transform;
       if (info && t) {
         mesh.position.set(
@@ -244,16 +206,17 @@ export class AssemblyViewer {
   }
 
   /**
-   * Lift the stacked enclosure parts apart along Z for an "exploded" view.
-   * Only affects parts that sit at their native (identity) transform --
-   * the enclosure parts, whose Z stacking already matches how they mate.
+   * Lift apart, along Z, any part whose definition carries an `explodeLift`
+   * (see the PARTS shape documented at the top of this file) -- typically
+   * the "exact" parts of a stacked enclosure, since they sit at identity
+   * transform and their Z stacking already matches how they mate.
    */
   setExplode(active) {
-    const lift = { buttonPad: 30, cover: 55, coverTies: 55 };
-    for (const [key, amount] of Object.entries(lift)) {
+    for (const [key, def] of Object.entries(this.parts)) {
+      if (!def.explodeLift) continue;
       const mesh = this.meshes[key];
       if (!mesh) continue;
-      mesh.position.z = active ? amount : 0;
+      mesh.position.z = active ? def.explodeLift : 0;
     }
   }
 

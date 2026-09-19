@@ -91,9 +91,10 @@ export const STEPS = [
     kicker: '3D-printed controller',
     approx: false,
     viewer: {
-      show: ['base', 'buttonPad', 'cover'],
-      highlight: ['base', 'buttonPad', 'cover'],
+      show: ['base', 'buttonPadBent', 'cover'],
+      highlight: ['base', 'buttonPadBent', 'cover'],
       camera: WIDE_CAM,
+      explodable: true,
     },
     alt: 'The three printed enclosure parts — Base, Button Pad and Cover — shown together at an angle. Use the Assembled/Exploded toggle above the viewer to space them apart and see how they stack.',
     body: `
@@ -208,8 +209,19 @@ export const STEPS = [
       show: ['buttonPad'],
       highlight: ['buttonPad'],
       camera: { pos: [110, -140, 130], target: [60, -17, 10] },
+      // Flat as-printed part vs the same part with both spacer lugs folded
+      // (button-pad-bent.stl).
+      variants: [
+        { key: 'buttonPad', label: 'As printed' },
+        { key: 'buttonPadBent', label: 'Folded' },
+      ],
+      defaultVariant: 'buttonPad',
     },
-    alt: 'A close-up of the teal Button Pad part on its own, angled to show its two thin, bendable spacer tabs.',
+    alt: 'A close-up of the teal Button Pad part on its own, angled to show its two thin, bendable spacer lugs.',
+    altVariants: {
+      buttonPad: 'A close-up of the teal Button Pad as printed, flat, with its two spacer lugs sticking out past the bar at either end, each with a small standoff and a hole.',
+      buttonPadBent: 'The teal Button Pad with both spacer lugs folded 180 degrees back under the bar, so each lug\'s standoff hangs below the bar directly under one of the bar\'s screw holes.',
+    },
     body: `
       <p>The Button Pad prints with two integrated spacers. Bend both of them
       <strong>downward along their weak (thin) line</strong> so they'll clip around the Buttons module
@@ -218,6 +230,13 @@ export const STEPS = [
         <div class="callout-title">🗜️ Tip</div>
         A small pair of pliers helps get a clean, controlled bend right on the scored line without
         stressing the rest of the part.
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">🔁 How far to fold</div>
+        In the 3D model, each spacer folds a full <strong>180°</strong> &mdash; back under the bar.
+        Flip the viewer above between <strong>As printed</strong> and <strong>Folded</strong> to see
+        it: the folded standoff lands directly under one of the bar's screw holes. (The pad sits
+        rotated 45° in the case, so the fold line runs diagonally.)
       </div>
     `,
   },
@@ -228,8 +247,8 @@ export const STEPS = [
     kicker: 'Assembly step 5',
     approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPad'],
-      highlight: ['buttonPad'],
+      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent'],
+      highlight: ['buttonPadBent'],
       dim: ['base', 'unoQ', 'modButtons'],
       camera: RIGHT_CAM,
     },
@@ -252,9 +271,9 @@ export const STEPS = [
     kicker: 'Assembly step 6',
     approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPad', 'modMovement'],
+      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement'],
       highlight: ['modMovement'],
-      dim: ['base', 'unoQ', 'modButtons', 'buttonPad'],
+      dim: ['base', 'unoQ', 'modButtons', 'buttonPadBent'],
       camera: CENTER_BACK_CAM,
     },
     alt: 'The orange Modulino Movement board, highlighted, standing upright in a slot toward the back of the Base, with everything placed so far shown faded.',
@@ -270,9 +289,9 @@ export const STEPS = [
     kicker: 'Assembly step 7',
     approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPad', 'modMovement', 'modJoystick'],
+      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick'],
       highlight: ['modJoystick'],
-      dim: ['base', 'unoQ', 'modButtons', 'buttonPad', 'modMovement'],
+      dim: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement'],
       camera: LEFT_CAM,
     },
     checklist: ['Screws for the Joystick mount'],
@@ -290,10 +309,15 @@ export const STEPS = [
     kicker: 'Assembly step 8',
     approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPad', 'modMovement', 'modJoystick', 'cover'],
+      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick', 'cover'],
       highlight: ['cover'],
       dim: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
       camera: TOP_CAM,
+      variants: [
+        { key: 'cover', label: 'Plain cover' },
+        { key: 'coverTies', label: 'Cover with ties' },
+      ],
+      defaultVariant: 'cover',
     },
     checklist: ['Cover fasteners'],
     alt: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
@@ -313,10 +337,15 @@ export const STEPS = [
     kicker: 'Assembly step 9',
     approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPad', 'modMovement', 'modJoystick', 'coverTies'],
+      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick', 'coverTies'],
       highlight: ['coverTies'],
       dim: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
       camera: TOP_CAM,
+      variants: [
+        { key: 'cover', label: 'Plain cover' },
+        { key: 'coverTies', label: 'Cover with ties' },
+      ],
+      defaultVariant: 'coverTies',
     },
     checklist: ['M3×6 screws (one of the two bottom holes)'],
     alt: 'A top-down view of the highlighted Cover-with-ties variant fitted onto the Base, showing its two extra flat tie tabs extending past the edge, not yet bent around the power cable.',
@@ -547,8 +576,8 @@ systemctl --user start hid-injector.service retro-launcher.service</pre>
     title: 'Have fun!',
     kicker: 'Done',
     viewer: {
-      show: ['base', 'buttonPad', 'cover'],
-      highlight: ['base', 'buttonPad', 'cover'],
+      show: ['base', 'buttonPadBent', 'cover'],
+      highlight: ['base', 'buttonPadBent', 'cover'],
       camera: WIDE_CAM,
     },
     alt: 'The finished enclosure — Base, Button Pad and Cover — shown fully assembled together.',

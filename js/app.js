@@ -1,5 +1,6 @@
 import { AssemblyViewer } from './viewer.js';
 import { PHASES, STEPS } from './steps.js';
+import { PARTS } from './parts.js';
 
 const STORAGE_KEY = 'arcade-guide-progress-v1';
 const LAYOUT_KEY = 'arcade-guide-layout-v1';
@@ -7,8 +8,8 @@ const LAYOUT_KEY = 'arcade-guide-layout-v1';
 const state = {
   index: 0,
   done: new Set(),
-  coverVariant: {}, // per-step override: stepId -> 'cover' | 'coverTies'
-  exploded: false,
+  variant: {}, // per-step selection for steps with viewer.variants: stepId -> variant key
+  exploded: {}, // per-step toggle for steps with viewer.explodable: stepId -> bool
 };
 
 function loadProgress() {
@@ -60,7 +61,7 @@ const els = {
 let viewer = null;
 
 function ensureViewer() {
-  if (!viewer) viewer = new AssemblyViewer(els.viewerCanvas);
+  if (!viewer) viewer = new AssemblyViewer(els.viewerCanvas, PARTS);
   return viewer;
 }
 
@@ -141,7 +142,7 @@ function renderChips(step) {
  * optional note about a toggle state (exploded view, etc).
  */
 function describeStep(step, extra) {
-  const variant = state.coverVariant[step.id];
+  const variant = state.variant[step.id];
   let text = step.alt || '3D model preview for this step.';
   if (step.altVariants && variant && step.altVariants[variant]) {
     text = step.altVariants[variant];
@@ -156,17 +157,21 @@ function setViewerAlt(text) {
   els.viewerAlt.textContent = text;
 }
 
+// A step opts into a variant-swap toolbar (e.g. two interchangeable part
+// options) via `step.viewer.variants: [{key, label}, ...]` plus an optional
+// `defaultVariant`. resolveShow() then substitutes whichever variant key is
+// currently selected for ANY of that list's keys appearing in show/highlight/dim.
 function resolveShow(step, list) {
-  const variant = state.coverVariant[step.id];
-  if (!variant) return list;
-  return list.map((k) => {
-    if (k === 'cover' || k === 'coverTies') return variant;
-    return k;
-  });
+  const variants = step.viewer && step.viewer.variants;
+  if (!variants || !variants.length) return list;
+  const keys = new Set(variants.map((v) => v.key));
+  const current = state.variant[step.id] || step.viewer.defaultVariant || variants[0].key;
+  return list.map((k) => (keys.has(k) ? current : k));
 }
 
 function renderViewerToolbar(step) {
   els.viewerToolbar.innerHTML = '';
+  const cfg = step.viewer;
   const v = ensureViewer();
 
   const resetBtn = document.createElement('button');
@@ -175,57 +180,53 @@ function renderViewerToolbar(step) {
   resetBtn.addEventListener('click', () => applyStepToViewer(step));
   els.viewerToolbar.appendChild(resetBtn);
 
-  if (step.id === 'overview') {
+  if (cfg.explodable) {
+    const isExploded = () => !!state.exploded[step.id];
     const assembledBtn = document.createElement('button');
-    assembledBtn.className = 'chip-btn' + (!state.exploded ? ' active' : '');
-    assembledBtn.textContent = 'Assembled';
     const explodedBtn = document.createElement('button');
-    explodedBtn.className = 'chip-btn' + (state.exploded ? ' active' : '');
+    assembledBtn.textContent = 'Assembled';
     explodedBtn.textContent = 'Exploded';
+    const syncActive = () => {
+      assembledBtn.classList.toggle('active', !isExploded());
+      explodedBtn.classList.toggle('active', isExploded());
+    };
+    assembledBtn.className = 'chip-btn';
+    explodedBtn.className = 'chip-btn';
+    syncActive();
     assembledBtn.addEventListener('click', () => {
-      state.exploded = false;
+      state.exploded[step.id] = false;
       v.setExplode(false);
-      assembledBtn.classList.add('active');
-      explodedBtn.classList.remove('active');
+      syncActive();
       setViewerAlt(describeStep(step));
     });
     explodedBtn.addEventListener('click', () => {
-      state.exploded = true;
+      state.exploded[step.id] = true;
       v.setExplode(true);
-      explodedBtn.classList.add('active');
-      assembledBtn.classList.remove('active');
+      syncActive();
       setViewerAlt(describeStep(step, 'Currently shown exploded, with the parts spaced apart to see how they stack.'));
     });
     els.viewerToolbar.appendChild(assembledBtn);
     els.viewerToolbar.appendChild(explodedBtn);
-    v.setExplode(state.exploded);
+    v.setExplode(isExploded());
   }
 
-  if (step.id === 'close-case' || step.id === 'fixing-ties') {
-    const current = state.coverVariant[step.id] || (step.id === 'fixing-ties' ? 'coverTies' : 'cover');
-    state.coverVariant[step.id] = current;
+  if (cfg.variants && cfg.variants.length) {
+    const current = state.variant[step.id] || cfg.defaultVariant || cfg.variants[0].key;
+    state.variant[step.id] = current;
 
-    const plainBtn = document.createElement('button');
-    plainBtn.className = 'chip-btn' + (current === 'cover' ? ' active' : '');
-    plainBtn.textContent = 'Plain cover';
-    const tiesBtn = document.createElement('button');
-    tiesBtn.className = 'chip-btn' + (current === 'coverTies' ? ' active' : '');
-    tiesBtn.textContent = 'Cover with ties';
-
-    plainBtn.addEventListener('click', () => {
-      state.coverVariant[step.id] = 'cover';
-      plainBtn.classList.add('active');
-      tiesBtn.classList.remove('active');
-      applyStepToViewer(step);
+    const buttons = cfg.variants.map((variant) => {
+      const btn = document.createElement('button');
+      btn.className = 'chip-btn' + (current === variant.key ? ' active' : '');
+      btn.textContent = variant.label;
+      btn.addEventListener('click', () => {
+        state.variant[step.id] = variant.key;
+        for (const b of buttons) b.classList.remove('active');
+        btn.classList.add('active');
+        applyStepToViewer(step);
+      });
+      els.viewerToolbar.appendChild(btn);
+      return btn;
     });
-    tiesBtn.addEventListener('click', () => {
-      state.coverVariant[step.id] = 'coverTies';
-      tiesBtn.classList.add('active');
-      plainBtn.classList.remove('active');
-      applyStepToViewer(step);
-    });
-    els.viewerToolbar.appendChild(plainBtn);
-    els.viewerToolbar.appendChild(tiesBtn);
   }
 }
 
@@ -258,7 +259,7 @@ async function applyStepToViewer(step) {
     dim: resolveShow(step, cfg.dim || []),
     camera: cfg.camera,
   });
-  const exploded = step.id === 'overview' ? state.exploded : false;
+  const exploded = cfg.explodable ? !!state.exploded[step.id] : false;
   v.setExplode(exploded);
   setViewerAlt(describeStep(step, exploded ? 'Currently shown exploded, with the parts spaced apart to see how they stack.' : null));
   // trigger a resize in case layout just changed visibility
