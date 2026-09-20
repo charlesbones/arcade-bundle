@@ -4,7 +4,6 @@ import { PARTS } from './parts.js';
 
 const STORAGE_KEY = 'arcade-guide-progress-v1';
 const THEME_KEY = 'arcade-guide-theme-v1';
-const LAYOUT_KEY = 'arcade-guide-layout-v1';
 
 const state = {
   index: 0,
@@ -37,7 +36,6 @@ function saveProgress() {
 
 const els = {
   app: document.getElementById('app'),
-  layoutSwitch: document.getElementById('layoutSwitch'),
   sidebar: document.getElementById('sidebar'),
   progressFill: document.getElementById('progressFill'),
   progressLabel: document.getElementById('progressLabel'),
@@ -375,43 +373,18 @@ function toggleDone() {
   renderStep();
 }
 
-function setLayout(name) {
-  const prevLayout = els.app.dataset.layout;
-  // .viewer-col is normally nested inside main.content, which is fine for
-  // split/hero. In immersive mode it needs position:fixed to cover the
-  // whole viewport -- but main.content gets a `backdrop-filter` for its
-  // glass-card look, and a `filter`/`backdrop-filter` ancestor becomes the
-  // containing block for fixed descendants (same rule as `transform`), so
-  // the "full-screen" viewer would actually be sized relative to that small
-  // card instead of the viewport. Reparent it up to #app itself while
-  // immersive is active, and put it back afterwards. Moving a canvas like
-  // this preserves its live WebGL context.
-  if (name === 'immersive' && prevLayout !== 'immersive') {
-    els.app.appendChild(els.viewerCol);
-  } else if (name !== 'immersive' && prevLayout === 'immersive') {
-    els.layout.appendChild(els.viewerCol);
-  }
-
-  els.app.dataset.layout = name;
-  for (const btn of els.layoutSwitch.querySelectorAll('button')) {
-    btn.classList.toggle('active', btn.dataset.layout === name);
-  }
-  try {
-    localStorage.setItem(LAYOUT_KEY, name);
-  } catch (e) {
-    /* ignore */
-  }
+function initLayout() {
+  // The viewer is position:fixed to cover the whole viewport, but
+  // main.content gets a `backdrop-filter` for its glass-card look, and a
+  // `filter`/`backdrop-filter` ancestor becomes the containing block for
+  // fixed descendants (same rule as `transform`), so the "full-screen"
+  // viewer would be sized relative to that small card instead of the
+  // viewport. Hang it directly off #app instead.
+  els.app.dataset.layout = 'immersive';
+  els.app.appendChild(els.viewerCol);
   closeMobileSidebar();
   // canvas dimensions depend on the new CSS, so re-measure once it's applied
   requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-}
-
-function loadLayout() {
-  try {
-    return localStorage.getItem(LAYOUT_KEY) || 'immersive';
-  } catch (e) {
-    return 'immersive';
-  }
 }
 
 function closeMobileSidebar() {
@@ -437,9 +410,6 @@ function bindEvents() {
   });
   els.overlay.addEventListener('click', closeMobileSidebar);
   if (els.themeBtn) els.themeBtn.addEventListener('click', () => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true));
-  for (const btn of els.layoutSwitch.querySelectorAll('button')) {
-    btn.addEventListener('click', () => setLayout(btn.dataset.layout));
-  }
   window.addEventListener('keydown', (e) => {
     if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
     if (e.key === 'ArrowRight') goTo(state.index + 1);
@@ -452,7 +422,7 @@ function main() {
   initFromHash();
   bindEvents();
   applyTheme(loadTheme(), false);
-  setLayout(loadLayout());
+  initLayout();
   renderStep();
 }
 

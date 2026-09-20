@@ -142,31 +142,6 @@ header.topbar .spacer { flex: 1; }
   .menu-btn { display: flex; }
 }
 
-.layout-switch {
-  display: flex;
-  gap: 2px;
-  background: var(--panel-alt);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 2px;
-}
-.layout-switch button {
-  border: none;
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 11.5px;
-  font-weight: 600;
-  padding: 6px 11px;
-  border-radius: 100px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.layout-switch button:hover { color: var(--text); }
-.layout-switch button.active { background: var(--accent); color: var(--on-accent); }
-@media (max-width: 640px) {
-  .layout-switch button span.full { display: none; }
-}
-
 /* ---------- Sidebar ---------- */
 nav.sidebar {
   grid-area: sidebar;
@@ -535,31 +510,10 @@ footer.credits {
 footer.credits a { color: var(--accent-strong); }
 
 /* =====================================================================
-   Layout variants -- "Split" (default, rules above) / "Hero" / "Immersive"
-   Same DOM throughout; these rules just reposition it. Chosen in the
-   header's layout-switch control and remembered per-browser.
+   Layout -- the guide is Immersive-only: a full-bleed 3D scene behind a
+   floating glass card. (The base rules above are the old Split layout,
+   kept only as the fallback that these rules override.)
    ===================================================================== */
-
-/* ---------- Hero: big top banner, text below ---------- */
-#app[data-layout="hero"] .layout-with-viewer {
-  grid-template-columns: 1fr;
-}
-#app[data-layout="hero"] .viewer-col {
-  order: -1;
-  position: static;
-}
-#app[data-layout="hero"] .viewer-box {
-  aspect-ratio: auto;
-  height: 54vh;
-}
-#app[data-layout="hero"] .viewer-toolbar,
-#app[data-layout="hero"] .legend {
-  justify-content: center;
-}
-#app[data-layout="hero"] .legend { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 16px; }
-@media (max-width: 700px) {
-  #app[data-layout="hero"] .viewer-box { height: 42vh; }
-}
 
 /* ---------- Immersive: full-bleed 3D behind a floating glass card ---------- */
 #app[data-layout="immersive"] header.topbar {
@@ -694,13 +648,11 @@ footer.credits a { color: var(--accent-strong); }
   }
 }
 
-/* Sidebar becomes an on-demand drawer (like mobile) in Hero/Immersive at any
-   viewport width, since the 3D view is meant to dominate the screen. */
-#app[data-layout="hero"] .menu-btn,
+/* Sidebar is an on-demand drawer (like mobile) at any viewport width, since
+   the 3D view is meant to dominate the screen. */
 #app[data-layout="immersive"] .menu-btn {
   display: flex;
 }
-#app[data-layout="hero"],
 #app[data-layout="immersive"] {
   /* single-column shell: default areas ("header header"/"sidebar main") need
      2 columns, and leaving that mismatched against a 1-column track list
@@ -708,7 +660,6 @@ footer.credits a { color: var(--accent-strong); }
   grid-template-columns: 1fr;
   grid-template-areas: "header" "main";
 }
-#app[data-layout="hero"] nav.sidebar,
 #app[data-layout="immersive"] nav.sidebar {
   position: fixed;
   top: 55px; bottom: 0; left: 0;
@@ -718,7 +669,6 @@ footer.credits a { color: var(--accent-strong); }
   transition: transform .2s ease;
   z-index: 31;
 }
-#app[data-layout="hero"] nav.sidebar.open,
 #app[data-layout="immersive"] nav.sidebar.open {
   transform: translateX(0);
 }
