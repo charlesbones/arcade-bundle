@@ -323,6 +323,7 @@ function renderStep() {
   els.doneToggle.classList.toggle('done', isDone);
   els.doneToggle.innerHTML = isDone ? '✓ Marked complete' : 'Mark step complete';
 
+  els.app.classList.toggle('no-viewer', !step.viewer); // lets CSS centre the immersive card
   if (step.viewer) {
     els.layout.classList.remove('no-viewer');
     els.viewerCol.style.display = '';
