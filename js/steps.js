@@ -24,6 +24,42 @@ const OVERVIEW_PARTS = ['base', 'unoQ', 'modButtons', 'modMovement', 'modJoystic
 export const STEPS = [
   // ---------------------------------------------------------------- ready --
   {
+    id: 'intro',
+    phase: 'ready',
+    title: 'UNO Q Arcade Bundle',
+    kicker: 'Welcome',
+    approx: false,
+    viewer: {
+      show: OVERVIEW_PARTS,
+      highlight: OVERVIEW_PARTS,
+      camera: WIDE_CAM,
+      explodedCamera: EXPLODED_CAM,
+      explodable: true,
+      startExploded: true, // open as an exploded diagram of the whole build...
+      autoRotate: true,    // ...slowly turning until you grab it
+    },
+    alt: 'The complete Arcade Bundle controller shown exploded and slowly turning: the Base at the bottom, then the UNO Q and the Modulino Joystick, Movement and Buttons boards, then the Button Pad, and the Cover on top, each layer with its screws. Use the Assembled/Exploded toggle above the viewer to close it up.',
+    body: `
+      <p style="font-size:1.12em;line-height:1.55;">Print it, wire it and turn an Arduino UNO Q into your own retro game controller.
+      This guide walks you through the whole build, one step at a time, with a 3D model that follows along.</p>
+      <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="mini-card"><span class="qty">3</span><span class="label">printed parts</span></div>
+        <div class="mini-card"><span class="qty">3</span><span class="label">Modulino modules</span></div>
+        <div class="mini-card"><span class="qty">1</span><span class="label">Arduino UNO Q</span></div>
+      </div>
+      <p>That's the whole controller, pulled apart layer by layer: Base, electronics, Button Pad, then the Cover
+      on top. Drag to turn it, and use <strong>Assembled</strong> / <strong>Exploded</strong> above the model to close it up or pull it apart.</p>
+      <h3 style="margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)">How the guide goes</h3>
+      <ol>
+        <li><strong>Get ready:</strong> set up your workstation and import the project.</li>
+        <li><strong>Build the controller:</strong> assemble the parts and close the case.</li>
+        <li><strong>Bring it to life:</strong> run the software and configure the inputs.</li>
+        <li><strong>Level up:</strong> add extra buttons.</li>
+      </ol>
+      <p>Use <strong>Next</strong> below, or the left and right arrow keys, to move through the steps.</p>
+    `,
+  },
+  {
     id: 'workstation',
     phase: 'ready',
     title: 'Set up your workstation',

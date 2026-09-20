@@ -630,11 +630,12 @@ footer.credits a { color: var(--accent-strong); }
 /* Text-only steps (no 3D): there's nothing behind the card, so centre it
    as a comfortable reading column instead of leaving it stranded on the right. */
 #app[data-layout="immersive"].no-viewer main.content {
-  max-width: 760px;
+  max-width: 680px;                   /* a comfortable line length */
   margin: 12px auto 16px;
   padding: 28px 36px 36px;
-  height: auto;                       /* hug the text ... */
-  max-height: calc(100% - 28px);      /* ... scroll when it's long */
+  /* same size on every text-only step (so the card doesn't jump around as you
+     move through the guide); longer steps scroll inside it */
+  height: min(720px, calc(100% - 28px));
   align-self: center;                 /* and sit in the middle of the screen */
 }
 #app[data-layout="immersive"].no-viewer .prose { font-size: 15.5px; }
@@ -643,7 +644,7 @@ footer.credits a { color: var(--accent-strong); }
   #app[data-layout="immersive"].no-viewer main.content {
     margin: 10px;
     align-self: center;
-    max-height: calc(100% - 20px);
+    height: calc(100% - 20px);
     padding: 18px 18px 26px;
   }
 }

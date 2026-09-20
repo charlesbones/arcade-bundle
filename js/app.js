@@ -294,6 +294,7 @@ async function applyStepToViewer(step) {
     highlight: resolveShow(step, cfg.highlight || []),
     dim: resolveShow(step, cfg.dim || []),
     camera: cfg.camera,
+    autoRotate: cfg.autoRotate,
   });
   const exploded = cfg.explodable ? !!state.exploded[step.id] : false;
   v.setExplode(exploded);
@@ -322,6 +323,9 @@ function renderStep() {
   els.doneToggle.innerHTML = isDone ? '✓ Marked complete' : 'Mark step complete';
 
   els.app.classList.toggle('no-viewer', !step.viewer); // lets CSS centre the immersive card
+  // a step can open already exploded (the cover step does)
+  if (step.viewer && step.viewer.startExploded && !(step.id in state.exploded)) state.exploded[step.id] = true;
+
   if (step.viewer) {
     els.layout.classList.remove('no-viewer');
     els.viewerCol.style.display = '';
