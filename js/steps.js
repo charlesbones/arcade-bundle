@@ -137,7 +137,6 @@ export const STEPS = [
     phase: 'build',
     title: 'Wire the Modulino chain',
     kicker: 'Assembly step 1',
-    approx: true,
     viewer: {
       show: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
       highlight: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
@@ -160,24 +159,16 @@ export const STEPS = [
     phase: 'build',
     title: 'Mount the UNO Q',
     kicker: 'Assembly step 2',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ'],
-      highlight: ['unoQ'],
+      show: ['base', 'unoQ', 'screwsUnoQ'],
+      highlight: ['unoQ', 'screwsUnoQ'],
       dim: ['base'],
       camera: DEFAULT_CAM,
     },
     checklist: ['2× M3×6 flathead screws'],
-    alt: 'The UNO Q board, highlighted in green, centered on top of the grey plastic Base, which is faded to show it is already in place.',
+    alt: 'The UNO Q board, highlighted in green, centered on top of the grey plastic Base, held down by two steel M3x6 screws; the Base is faded to show it is already in place.',
     body: `
       <p>Screw the UNO Q to the <strong>center of the Base</strong> using 2 M3×6 flathead screws.</p>
-      <div class="callout warn">
-        <div class="callout-title">📍 Approximate model position</div>
-        The UNO Q and Modulino models shown here come from Arduino's separate CAD downloads, not the
-        original enclosure assembly, so their exact position/orientation on the Base is illustrative
-        rather than a precise mate. Trust the written instructions and the Base's screw holes for the
-        real placement.
-      </div>
     `,
   },
   {
@@ -185,15 +176,14 @@ export const STEPS = [
     phase: 'build',
     title: 'Mount the Modulino Buttons',
     kicker: 'Assembly step 3',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons'],
-      highlight: ['modButtons'],
-      dim: ['base', 'unoQ'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons'],
+      highlight: ['modButtons', 'screwsButtons'],
+      dim: ['base', 'unoQ', 'screwsUnoQ'],
       camera: RIGHT_CAM,
     },
     checklist: ['2× M3×6 flathead screws (upper holes)'],
-    alt: 'The Modulino Buttons module, highlighted in blue, on the right side of the Base, next to the faded UNO Q board and Base.',
+    alt: 'The Modulino Buttons module, highlighted in blue, on the right side of the Base, angled 45 degrees and held by two M3x6 screws, next to the faded UNO Q board and Base.',
     body: `
       <p>Screw the Modulino Buttons to the Base <strong>with the LEDs facing the UNO Q</strong>, using
       2 M3×6 screws in the upper holes.</p>
@@ -245,15 +235,14 @@ export const STEPS = [
     phase: 'build',
     title: 'Attach the Button Pad',
     kicker: 'Assembly step 5',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent'],
-      highlight: ['buttonPadBent'],
-      dim: ['base', 'unoQ', 'modButtons'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad'],
+      highlight: ['buttonPadBent', 'screwsPad'],
+      dim: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons'],
       camera: RIGHT_CAM,
     },
     checklist: ['2× M3×10 flathead screws'],
-    alt: 'The teal Button Pad, highlighted, fitted over the Modulino Buttons module, with the Base, UNO Q and Buttons faded underneath.',
+    alt: 'The teal Button Pad, highlighted, fitted over the Modulino Buttons board with its two folded spacer lugs, screwed down by two M3x10 screws through the lugs, with everything else faded.',
     body: `
       <p>Place the Button Pad over the Modulino Buttons and screw it down through its two bent spacers.</p>
       <div class="callout warn">
@@ -269,11 +258,10 @@ export const STEPS = [
     phase: 'build',
     title: 'Insert the Modulino Movement',
     kicker: 'Assembly step 6',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement'],
       highlight: ['modMovement'],
-      dim: ['base', 'unoQ', 'modButtons', 'buttonPadBent'],
+      dim: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad'],
       camera: CENTER_BACK_CAM,
     },
     alt: 'The orange Modulino Movement board, highlighted, standing upright in a slot toward the back of the Base, with everything placed so far shown faded.',
@@ -287,15 +275,14 @@ export const STEPS = [
     phase: 'build',
     title: 'Mount the Modulino Joystick',
     kicker: 'Assembly step 7',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick'],
-      highlight: ['modJoystick'],
-      dim: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement', 'modJoystick', 'screwsJoystick'],
+      highlight: ['modJoystick', 'screwsJoystick'],
+      dim: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement'],
       camera: LEFT_CAM,
     },
     checklist: ['Screws for the Joystick mount'],
-    alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base, with everything placed so far shown faded.',
+    alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base with one M3x6 screw, with everything placed so far shown faded.',
     body: `
       <p>Screw the Modulino Joystick in on the <strong>left side</strong> of the Base. Double-check the
       little XY-axis graphic printed on the joystick module lines up the way you expect before you
@@ -307,11 +294,10 @@ export const STEPS = [
     phase: 'build',
     title: 'Close the case',
     kicker: 'Assembly step 8',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick', 'cover'],
-      highlight: ['cover'],
-      dim: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement', 'modJoystick', 'screwsJoystick', 'cover', 'screwsCover'],
+      highlight: ['cover', 'screwsCover'],
+      dim: ['unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'modMovement', 'modJoystick', 'screwsJoystick', 'screwsPad'],
       camera: TOP_CAM,
       variants: [
         { key: 'cover', label: 'Plain cover' },
@@ -335,11 +321,10 @@ export const STEPS = [
     phase: 'build',
     title: 'Secure the power cable (optional)',
     kicker: 'Assembly step 9',
-    approx: true,
     viewer: {
-      show: ['base', 'unoQ', 'modButtons', 'buttonPadBent', 'modMovement', 'modJoystick', 'coverTies'],
-      highlight: ['coverTies'],
-      dim: ['unoQ', 'modButtons', 'modMovement', 'modJoystick'],
+      show: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement', 'modJoystick', 'screwsJoystick', 'coverTies', 'screwsCover'],
+      highlight: ['coverTies', 'screwsCover'],
+      dim: ['unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'modMovement', 'modJoystick', 'screwsJoystick', 'screwsPad'],
       camera: TOP_CAM,
       variants: [
         { key: 'cover', label: 'Plain cover' },

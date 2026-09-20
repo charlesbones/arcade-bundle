@@ -5,10 +5,13 @@
 // together from one assembly, so their coordinates already line up perfectly
 // -- exact:true, no transform needed.
 // "electronics" parts (uno-q, modulino-*) come from Arduino's separate STEP
-// downloads (docs.arduino.cc) and are placed here at approximate, hand-picked
-// positions that match the written instructions (center of base, left side,
-// etc). `local` is that model's own bounding box (bbox center XY + min Z),
-// used to align it onto `transform.pos`.
+// downloads (docs.arduino.cc). Their positions -- and every screw's -- are
+// the real ones from a FreeCAD assembly (complete-project.FCStd), exported
+// with tools/fc_export_placements.py in the private workshop repo. Each
+// `placement` is a FreeCAD Placement: rotate the STL about its own origin,
+// then translate (see viewer.js). Screws are one model placed many times
+// via `instances`; the assembly held two duplicate screws stacked at the same
+// spot ((63,3,3) and (76,-1,15.5)) which are listed once here.
 
 export const PARTS = {
   base: {
@@ -46,36 +49,73 @@ export const PARTS = {
     color: 0xe4e0d4,
     explodeLift: 55,
   },
+  // -- electronics: real placements from the FreeCAD assembly -------------
   unoQ: {
     file: 'models/uno-q.stl',
-    exact: false,
     color: 0x1c7a3e,
-    // "screw the UNO Q to the center of the base"
-    transform: { pos: [0, -10, 13], rot: [0, 0, 0] },
-    local: { centerXY: [-431.08, 110.97], minZ: 10.93 },
+    placement: { pos: [431, -111, -15], axis: [0, 0, 1], angle: 0 },
   },
   modButtons: {
     file: 'models/modulino-buttons.stl',
-    exact: false,
     color: 0x2f6fb0,
-    // footprint of the real Button Pad part (39.36..82.35, -39.02..3.97)
-    transform: { pos: [60.85, -17.5, 13], rot: [0, 0, 0] },
-    local: { centerXY: [20.5, 12.68], minZ: -1.61 },
+    placement: { pos: [51, -37, 2], axis: [0, 0, 1], angle: 45 },
   },
   modMovement: {
     file: 'models/modulino-movement.stl',
-    exact: false,
     color: 0xb0562f,
-    // "inserted vertically into the slot" -- stood up, mid-board
-    transform: { pos: [-5, 18, 13], rot: [Math.PI / 2, 0, 0] },
-    local: { centerXY: [20.5, 12.68], minZ: -1.61 },
+    placement: { pos: [-21, -30, 20], axis: [-1, 0, 0], angle: 90 },
   },
   modJoystick: {
     file: 'models/modulino-joystick.stl',
-    exact: false,
     color: 0x8a2fb0,
-    // "screwed in on the left side"
-    transform: { pos: [-55, -17.5, 13], rot: [0, 0, 0] },
-    local: { centerXY: [20.5, 13.17], minZ: -3.7 },
+    placement: { pos: [-77, -27, 1], axis: [0, 0, 1], angle: 0 },
+  },
+
+  // -- screws (origin = head top centre, tip toward -Z) ---------------------
+  // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 1 holds the Joystick
+  screwsUnoQ: {
+    file: 'models/m3x6-flathead-screw.stl',
+    color: 0xb8bec4,
+    instances: [
+      { pos: [31, 9, 4] },
+      { pos: [-20, -24, 4] },
+    ],
+  },
+  screwsButtons: {
+    file: 'models/m3x6-flathead-screw.stl',
+    color: 0xb8bec4,
+    instances: [
+      { pos: [39, -19, 3] },
+      { pos: [63, 3, 3] },
+    ],
+  },
+  screwsJoystick: {
+    file: 'models/m3x6-flathead-screw.stl',
+    color: 0xb8bec4,
+    instances: [
+      { pos: [-73, -22, 2] },
+    ],
+  },
+  // M3x10: 2 go through the Button Pad's spacer lugs, 5 close the Cover
+  screwsPad: {
+    file: 'models/m3x10-flathead-screw.stl',
+    color: 0xb8bec4,
+    explodeLift: 30, // rides with the Button Pad
+    instances: [
+      { pos: [73, -8, 8] },
+      { pos: [51, -30, 7] },
+    ],
+  },
+  screwsCover: {
+    file: 'models/m3x10-flathead-screw.stl',
+    color: 0xb8bec4,
+    explodeLift: 55, // rides with the Cover
+    instances: [
+      { pos: [-33, -31, 15.5] },
+      { pos: [-34, 26, 15.5] },
+      { pos: [33, -31, 15.5] },
+      { pos: [34, 26, 15.5] },
+      { pos: [76, -1, 15.5] },
+    ],
   },
 };

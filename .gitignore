@@ -1,2 +1,7 @@
 .DS_Store
 modulino-hid-bridge-arcade-machine.zip
+
+# FreeCAD working files (the assembly lives in the private workshop repo)
+*.FCStd
+*.FCBak
+models/complete-project.stl

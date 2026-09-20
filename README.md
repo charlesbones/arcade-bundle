@@ -67,10 +67,16 @@ models/              STL geometry (see below)
   `modulino-buttons.stl` are reference models converted from the official
   STEP files on [docs.arduino.cc](https://docs.arduino.cc/) (product pages
   for the UNO Q and each Modulino node). They come from separate CAD
-  exports, not the original enclosure assembly, so their position in the
-  viewer is a hand-placed approximation matching the written instructions
-  ("center of the base", "left side", etc.) rather than a precise mate.
-  Steps that use them are flagged with an "approximate 3D placement" badge.
+  exports, not the original enclosure assembly, so they can't mate by
+  coordinates alone. Their positions — and those of every screw — come from
+  a real FreeCAD assembly: each part is imported as a mesh, moved into place
+  with its Placement, and those numbers are copied into `js/parts.js`
+  (`placement: { pos, axis, angle }`, FreeCAD's own convention).
+- `m3x6-flathead-screw.stl` and `m3x10-flathead-screw.stl` are ISO 10642
+  socket countersunk screws (origin at the head's top face, tip pointing
+  down). `js/parts.js` places each size many times with `instances`:
+  M3×6 holds the UNO Q (2), the Modulino Buttons (2) and the Joystick (1);
+  M3×10 goes through the Button Pad's lugs (2) and closes the Cover (5).
 - `button-pad-bent.stl` is `button-pad.stl` with both spacer lugs folded
   180° back under the bar (the pad sits rotated 45° in the case, so the fold
   line is diagonal). Every assembled scene uses it; the prep step has an
