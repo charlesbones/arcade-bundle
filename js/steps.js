@@ -115,6 +115,7 @@ export const STEPS = [
              in the My Apps list." -->
         <li>Click <strong>Create New App (+)</strong> and import the downloaded project.</li>
       </ol>
+      <figure class="shot"><img src="media/applab-import.png" alt="The Arduino App Lab 'Create new app' menu open, showing the 'Create New App' and 'Import App' options." loading="lazy"><figcaption>In App Lab, choose <strong>Import App</strong>.</figcaption></figure>
       <div class="callout tip">
         <div class="callout-title">💡 Remember this password</div>
         You'll type it again when you run <code class="inline">sudo</code> commands over the terminal later in this guide.
@@ -414,6 +415,7 @@ export const STEPS = [
           <code class="inline">http://YOUR_IP_ADDRESS:7000</code> yourself.</li>
       </ol>
       <p>This web interface lets you monitor Modulino inputs live and configure how they behave.</p>
+      <figure class="shot"><img src="media/hidbridge-ui.png" alt="The Modulino HID Bridge web interface: the HID output checkbox is enabled, the Buttons and Movement nodes are listed as devices, and their live values are shown below." loading="lazy"><figcaption>The HID Bridge interface, with two Modulino nodes detected.</figcaption></figure>
     `,
   },
   {
@@ -424,15 +426,19 @@ export const STEPS = [
     body: `
       <p><strong>HID output enable</strong> &mdash; this checkbox turns communication with the
       <code class="inline">injector.py</code> script on or off.</p>
+      <figure class="shot"><img src="media/hid-output.png" alt="The HID output section with the 'Enable HID output (mouse and keys)' checkbox ticked." loading="lazy"><figcaption>HID output enabled.</figcaption></figure>
       <p><strong>Devices</strong> &mdash; lists every Modulino node currently seen on the Qwiic bus. If
       nothing shows up, click <strong>Rescan I2C Bus</strong> and wait a few seconds.</p>
+      <figure class="shot"><img src="media/devices.png" alt="The Devices section listing the Modulino Buttons and Modulino Movement nodes with their I2C addresses, and a Rescan I2C bus button." loading="lazy"><figcaption>Detected Modulino nodes.</figcaption></figure>
       <p><strong>Live data</strong> &mdash; shows real-time values from all connected nodes. The
       <strong>Nudge Cursor</strong> button sends a test mouse movement so you can confirm the injector
       service is actually listening.</p>
+      <figure class="shot"><img src="media/live-data.png" alt="The Live data section with a Nudge cursor button and the current values of the Buttons and Movement nodes." loading="lazy"><figcaption>Live values and the Nudge cursor button.</figcaption></figure>
 
       <h3 style="margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)">Joystick / pointer settings</h3>
       <p>The Modulino Joystick can drive a <strong>mouse pointer</strong> or emulate a <strong>D-pad</strong>
       (the usual choice for gaming).</p>
+      <figure class="shot"><img src="media/joystick-settings.png" alt="Joystick and pointer settings with the joystick mode set to D-Pad (simulate arrow keys), plus threshold, release factor, diagonal policy and auto-repeat options and a Save pointer settings button." loading="lazy"><figcaption>Joystick in D-pad mode.</figcaption></figure>
       <table class="spec">
         <tr><th>D-pad setting</th><th>What it does</th></tr>
         <tr><td>Threshold</td><td>How far the stick must move (0–1) before a direction registers. Lower = more sensitive.</td></tr>
@@ -455,10 +461,12 @@ export const STEPS = [
       shortcut, or a key combination &mdash; e.g. press <code class="inline">A</code>, press
       <code class="inline">Shift+A</code>, left-click, or hold a key &mdash; and set to behave as a
       tap or a hold.</p>
+      <figure class="shot"><img src="media/buttons-mapping.png" alt="Modulino Buttons settings: Button A mapped to the A key, Button B to S and Button C to Enter, each set to Hold." loading="lazy"><figcaption>Three buttons mapped to keys.</figcaption></figure>
 
       <h3 style="margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)">Movement</h3>
       <p>Configured like the joystick (mouse or D-pad), plus a <strong>mounting rotation</strong> value
       if you installed the Movement node rotated (e.g. 90°) from its default orientation.</p>
+      <figure class="shot"><img src="media/movement-settings.png" alt="Modulino Movement settings: mode, mounting rotation, sensitivity for X and Y, invert options and a D-pad threshold, with a Save button." loading="lazy"><figcaption>Movement settings.</figcaption></figure>
 
       <div class="callout tip">
         <div class="callout-title">💾 Don't forget</div>
@@ -483,6 +491,7 @@ export const STEPS = [
       <pre class="code">sudo python3 injector.py</pre>
       <p>If everything's working, mouse and keyboard input should now follow your Modulino inputs
       using the settings you configured in the previous step.</p>
+      <figure class="shot"><img src="media/injector-terminal.png" alt="A terminal showing the injector script listening on UDP port 5555 and reporting that its virtual mouse and keyboard devices are ready." loading="lazy"><figcaption>The injector is running.</figcaption></figure>
     `,
   },
   {
@@ -508,9 +517,10 @@ export const STEPS = [
       </div>
       <p>Open RetroArch from <strong>Applications → Games → RetroArch</strong>. On first launch you'll
       navigate the menu with your mouse and keyboard, since the controllers aren't mapped yet:</p>
+      <figure class="shot"><img src="media/retroarch-main-menu.png" alt="RetroArch's main menu with Load Core, Load Content and other entries." loading="lazy"><figcaption>RetroArch's main menu.</figcaption></figure>
       <ol>
-        <li>Go to <strong>Settings → Input</strong>.</li>
-        <li>Open <strong>RetroPad Binds</strong> and select <strong>Port 1 Controls</strong>.</li>
+        <li>Go to <strong>Settings → Input</strong>.<figure class="shot"><img src="media/retroarch-settings.png" alt="RetroArch's Settings menu with the Input entry highlighted." loading="lazy"><figcaption>Settings, then Input.</figcaption></figure></li>
+        <li>Open <strong>RetroPad Binds</strong><figure class="shot"><img src="media/retroarch-input.png" alt="RetroArch's Input menu with the RetroPad Binds entry highlighted." loading="lazy"><figcaption>RetroPad Binds.</figcaption></figure> and select <strong>Port 1 Controls</strong>.<figure class="shot"><img src="media/retroarch-port1.png" alt="The RetroPad Binds menu with Port 1 Controls highlighted." loading="lazy"><figcaption>Port 1 Controls.</figcaption></figure></li>
         <li>Bind each control to match the same buttons you set up on the HID Bridge page.</li>
         <li>If a game uses a D-pad, make sure the matching Modulino Joystick/Movement is set to
           <strong>D-pad emulation</strong> mode on the HID Bridge page.</li>
