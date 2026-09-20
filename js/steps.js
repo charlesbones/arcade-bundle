@@ -198,7 +198,8 @@ export const STEPS = [
     viewer: {
       show: ['buttonPad'],
       highlight: ['buttonPad'],
-      camera: { pos: [110, -140, 130], target: [60, -17, 10] },
+      // low, side-on angle so the folded standoffs hanging under the bar are visible
+      camera: { pos: [98, -100, 20], target: [60, -17, 7] },
       // Flat as-printed part vs the same part with both spacer lugs folded
       // (button-pad-bent.stl).
       variants: [
@@ -222,11 +223,11 @@ export const STEPS = [
         stressing the rest of the part.
       </div>
       <div class="callout tip">
-        <div class="callout-title">🔁 How far to fold</div>
-        In the 3D model, each spacer folds a full <strong>180°</strong> &mdash; back under the bar.
-        Flip the viewer above between <strong>As printed</strong> and <strong>Folded</strong> to see
-        it: the folded standoff lands directly under one of the bar's screw holes. (The pad sits
-        rotated 45° in the case, so the fold line runs diagonally.)
+        <div class="callout-title">📍 Where the standoffs end up</div>
+        Fold each spacer a full <strong>180°</strong> back under the bar. Its small standoff then
+        hangs <strong>below the bar, directly under one of its two screw holes</strong>
+        &mdash; that's where the M3×10 screw goes down through the bar and into the standoff.
+        Flip the viewer between <strong>As printed</strong> and <strong>Folded</strong> to see it. (The pad sits rotated 45° in the case, so the fold line runs diagonally.)
       </div>
     `,
   },
@@ -245,6 +246,11 @@ export const STEPS = [
     alt: 'The teal Button Pad, highlighted, fitted over the Modulino Buttons board with its two folded spacer lugs, screwed down by two M3x10 screws through the lugs, with everything else faded.',
     body: `
       <p>Place the Button Pad over the Modulino Buttons and screw it down through its two bent spacers.</p>
+      <div class="callout tip">
+        <div class="callout-title">🔩 Through the standoffs</div>
+        Each M3×10 screw goes down through a hole in the bar <strong>and through the standoff hanging
+        underneath it</strong> &mdash; that's why the spacers are folded first.
+      </div>
       <div class="callout warn">
         <div class="callout-title">⚠️ Screw size note</div>
         The original tutorial text says "two M3×8 screws" in this step, while its own bill of materials
