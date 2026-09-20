@@ -13,6 +13,9 @@
 // via `instances`; the assembly held two duplicate screws stacked at the same
 // spot ((63,3,3) and (76,-1,15.5)) which are listed once here.
 
+// Exploded view (overview step) stacks bottom to top, in Z:
+//   base 0 | boards 20 | board screws 40 | pad 75 | pad screws 95 | cover 115 | cover screws 135
+
 export const PARTS = {
   base: {
     file: 'models/base.stl',
@@ -23,7 +26,7 @@ export const PARTS = {
     file: 'models/button-pad.stl',
     exact: true,
     color: 0x2f8f8a,
-    explodeLift: 30,
+    explodeLift: 75,
   },
   // Same pad with both spacer lugs folded 180 degrees back under the bar
   // (made from button-pad.stl; the fold line is diagonal because the pad
@@ -35,37 +38,41 @@ export const PARTS = {
     file: 'models/button-pad-bent.stl',
     exact: true,
     color: 0x2f8f8a,
-    explodeLift: 30,
+    explodeLift: 75,
   },
   cover: {
     file: 'models/cover.stl',
     exact: true,
     color: 0xe4e0d4,
-    explodeLift: 55,
+    explodeLift: 115,
   },
   coverTies: {
     file: 'models/cover-with-ties.stl',
     exact: true,
     color: 0xe4e0d4,
-    explodeLift: 55,
+    explodeLift: 115,
   },
   // -- electronics: real placements from the FreeCAD assembly -------------
   unoQ: {
+    explodeLift: 20,
     file: 'models/uno-q.stl',
     color: 0x1c7a3e,
     placement: { pos: [431, -111, -15], axis: [0, 0, 1], angle: 0 },
   },
   modButtons: {
+    explodeLift: 20,
     file: 'models/modulino-buttons.stl',
     color: 0x2f6fb0,
     placement: { pos: [51, -37, 2], axis: [0, 0, 1], angle: 45 },
   },
   modMovement: {
+    explodeLift: 20,
     file: 'models/modulino-movement.stl',
     color: 0xb0562f,
     placement: { pos: [-21, -30, 20], axis: [-1, 0, 0], angle: 90 },
   },
   modJoystick: {
+    explodeLift: 20,
     file: 'models/modulino-joystick.stl',
     color: 0x8a2fb0,
     placement: { pos: [-77, -27, 1], axis: [0, 0, 1], angle: 0 },
@@ -74,6 +81,7 @@ export const PARTS = {
   // -- screws (origin = head top centre, tip toward -Z) ---------------------
   // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 1 holds the Joystick
   screwsUnoQ: {
+    explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
@@ -82,6 +90,7 @@ export const PARTS = {
     ],
   },
   screwsButtons: {
+    explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
@@ -90,6 +99,7 @@ export const PARTS = {
     ],
   },
   screwsJoystick: {
+    explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
@@ -100,7 +110,7 @@ export const PARTS = {
   screwsPad: {
     file: 'models/m3x10-flathead-screw.stl',
     color: 0xb8bec4,
-    explodeLift: 30, // rides with the Button Pad
+    explodeLift: 95, // rides above the Button Pad
     instances: [
       { pos: [73, -8, 8] },
       { pos: [51, -30, 7] },
@@ -109,7 +119,7 @@ export const PARTS = {
   screwsCover: {
     file: 'models/m3x10-flathead-screw.stl',
     color: 0xb8bec4,
-    explodeLift: 55, // rides with the Cover
+    explodeLift: 135, // rides above the Cover
     instances: [
       { pos: [-33, -31, 15.5] },
       { pos: [-34, 26, 15.5] },

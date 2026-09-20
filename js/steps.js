@@ -17,6 +17,9 @@ const LEFT_CAM = { pos: [-150, -190, 160], target: [-55, -18, 12] };
 const CENTER_BACK_CAM = { pos: [40, -230, 190], target: [-5, 18, 20] };
 const TOP_CAM = { pos: [10, -30, 340], target: [0, -10, 10] };
 const WIDE_CAM = { pos: [260, -360, 260], target: [0, 0, 10] };
+const EXPLODED_CAM = { pos: [330, -470, 330], target: [0, 0, 65] };
+// the whole controller: printed parts, boards and every screw
+const OVERVIEW_PARTS = ['base', 'unoQ', 'modButtons', 'modMovement', 'modJoystick', 'screwsUnoQ', 'screwsButtons', 'screwsJoystick', 'buttonPadBent', 'screwsPad', 'cover', 'screwsCover'];
 
 export const STEPS = [
   // ---------------------------------------------------------------- ready --
@@ -91,12 +94,13 @@ export const STEPS = [
     kicker: '3D-printed controller',
     approx: false,
     viewer: {
-      show: ['base', 'buttonPadBent', 'cover'],
-      highlight: ['base', 'buttonPadBent', 'cover'],
+      show: OVERVIEW_PARTS,
+      highlight: OVERVIEW_PARTS,
       camera: WIDE_CAM,
+      explodedCamera: EXPLODED_CAM,
       explodable: true,
     },
-    alt: 'The three printed enclosure parts — Base, Button Pad and Cover — shown together at an angle. Use the Assembled/Exploded toggle above the viewer to space them apart and see how they stack.',
+    alt: 'The complete Arcade Bundle controller — Base, Button Pad and Cover around the UNO Q, Modulino Joystick, Movement and Buttons, held together with M3 screws — shown closed at an angle. Use the Assembled/Exploded toggle above the viewer to pull every layer apart, from the Base at the bottom to the Cover on top.',
     body: `
       <p>The enclosure is three printed parts that snap around the electronics. Here's everything the
       official build calls for.</p>
