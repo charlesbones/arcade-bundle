@@ -374,6 +374,7 @@ main.content {
 .callout .callout-title { font-weight: 700; margin-bottom: 3px; display: flex; gap: 6px; align-items: center; }
 
 pre.code {
+  max-width: 100%;
   background: var(--code-bg);
   color: var(--code-text);
   padding: 12px 14px;
@@ -524,7 +525,7 @@ footer.credits a { color: var(--accent-strong); }
   border-bottom-color: transparent;
 }
 #app[data-layout="immersive"] .layout-with-viewer {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);   /* minmax(0,..) so a long code line scrolls instead of widening the card */
   position: relative;
 }
 #app[data-layout="immersive"] .viewer-col {
@@ -633,10 +634,11 @@ footer.credits a { color: var(--accent-strong); }
   max-width: 680px;                   /* a comfortable line length */
   margin: 12px auto 16px;
   padding: 28px 36px 36px;
-  /* same size on every text-only step (so the card doesn't jump around as you
-     move through the guide); longer steps scroll inside it */
-  height: min(720px, calc(100% - 28px));
-  align-self: center;                 /* and sit in the middle of the screen */
+  /* the card follows the text: it hugs short steps, grows with longer ones,
+     and only scrolls inside once it reaches the screen height */
+  height: auto;
+  max-height: calc(100% - 28px);
+  align-self: center;                 /* and sits in the middle of the screen */
 }
 #app[data-layout="immersive"].no-viewer .prose { font-size: 15.5px; }
 #app[data-layout="immersive"].no-viewer .step-header h1 { font-size: 26px; }
@@ -644,7 +646,7 @@ footer.credits a { color: var(--accent-strong); }
   #app[data-layout="immersive"].no-viewer main.content {
     margin: 10px;
     align-self: center;
-    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
     padding: 18px 18px 26px;
   }
 }
