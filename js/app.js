@@ -3,6 +3,7 @@ import { PHASES, STEPS } from './steps.js';
 import { PARTS } from './parts.js';
 
 const STORAGE_KEY = 'arcade-guide-progress-v1';
+const THEME_KEY = 'arcade-guide-theme-v1';
 const LAYOUT_KEY = 'arcade-guide-layout-v1';
 
 const state = {
@@ -56,9 +57,44 @@ const els = {
   doneToggle: document.getElementById('doneToggle'),
   menuBtn: document.getElementById('menuBtn'),
   overlay: document.getElementById('overlay'),
+  themeBtn: document.getElementById('themeBtn'),
 };
 
 let viewer = null;
+
+// Light is the default; the header button toggles dark and remembers the choice.
+function currentTheme() {
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+}
+
+function applyTheme(name, persist) {
+  document.documentElement.dataset.theme = name;
+  if (els.themeBtn) {
+    const dark = name === 'dark';
+    els.themeBtn.textContent = dark ? '\u2600' : '\u263E';
+    els.themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    els.themeBtn.title = dark ? 'Switch to light theme' : 'Switch to dark theme';
+  }
+  if (persist) {
+    try {
+      localStorage.setItem(THEME_KEY, name);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+  // the 3D scene's background is read from CSS once, so re-sync it
+  if (viewer) {
+    viewer.setBackground(getComputedStyle(document.documentElement).getPropertyValue('--viewer-bg').trim());
+  }
+}
+
+function loadTheme() {
+  try {
+    return localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light';
+  } catch (e) {
+    return 'light';
+  }
+}
 
 function ensureViewer() {
   if (!viewer) viewer = new AssemblyViewer(els.viewerCanvas, PARTS);
@@ -399,6 +435,7 @@ function bindEvents() {
     els.overlay.classList.add('open');
   });
   els.overlay.addEventListener('click', closeMobileSidebar);
+  if (els.themeBtn) els.themeBtn.addEventListener('click', () => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true));
   for (const btn of els.layoutSwitch.querySelectorAll('button')) {
     btn.addEventListener('click', () => setLayout(btn.dataset.layout));
   }
@@ -413,6 +450,7 @@ function main() {
   loadProgress();
   initFromHash();
   bindEvents();
+  applyTheme(loadTheme(), false);
   setLayout(loadLayout());
   renderStep();
 }

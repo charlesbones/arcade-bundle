@@ -6,6 +6,7 @@
 <title>UNO Q Arcade Bundle — Interactive Build Guide</title>
 <meta name="description" content="An interactive, 3D-illustrated build guide for the Arduino UNO Q Arcade Bundle: print, wire and configure your own retro game controller." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>" />
+<script>try{if(localStorage.getItem("arcade-guide-theme-v1")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <link rel="stylesheet" href="css/style.css" />
 <script type="importmap">
 {
@@ -28,6 +29,7 @@
       <button data-layout="hero" aria-label="Hero layout">▭ <span class="full">Hero</span></button>
       <button data-layout="immersive" aria-label="Immersive layout">◧ <span class="full">Immersive</span></button>
     </div>
+    <button class="icon-btn theme-btn" id="themeBtn" aria-label="Switch to dark theme" title="Switch to dark theme">&#9790;</button>
   </header>
 
   <nav class="sidebar" id="sidebar"></nav>

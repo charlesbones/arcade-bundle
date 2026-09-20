@@ -26,35 +26,7 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0c1b2b;
-    --panel: #142a40;
-    --panel-alt: #1a344d;
-    --border: #24425f;
-    --text: #e8f1fa;
-    --text-dim: #8fa9c2;
-    --accent: #5aa9ff;
-    --accent-strong: #8cc4ff;
-    --accent-soft: #17385a;
-    --on-accent: #08213a;
-    --spark: #ffd166;
-    --warn-bg: #3a2f10;
-    --warn-border: #a8791f;
-    --warn-text: #f0cd7e;
-    --danger-bg: #3a1c19;
-    --danger-border: #a4453a;
-    --danger-text: #f3a89c;
-    --code-bg: #08131f;
-    --code-text: #e3edf7;
-    --viewer-bg: #0c1b2b;
-    --panel-glass: rgba(20,42,64,0.74);
-    --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-float: 0 18px 48px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
-    color-scheme: dark;
-  }
-}
-
+/* Light is the default; dark is opt-in via the header toggle (sets data-theme="dark"). */
 :root[data-theme="dark"] {
   --bg: #0c1b2b;
   --panel: #142a40;
@@ -162,6 +134,8 @@ header.topbar .spacer { flex: 1; }
   font-size: 16px;
 }
 .icon-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+.theme-btn { font-size: 15px; line-height: 1; }
 
 .menu-btn { display: none; }
 @media (max-width: 880px) {
