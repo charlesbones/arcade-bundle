@@ -212,18 +212,18 @@ export const STEPS = [
       ],
       defaultVariant: 'buttonPad',
     },
-    alt: 'A close-up of the teal Button Pad part on its own, angled to show its two thin, bendable spacer lugs.',
+    alt: 'A close-up of the teal Button Pad part on its own, angled to show its two thin, foldable spacer lugs.',
     altVariants: {
       buttonPad: 'A close-up of the teal Button Pad as printed, flat, with its two spacer lugs sticking out past the bar at either end, each with a small standoff and a hole.',
       buttonPadBent: 'The teal Button Pad with both spacer lugs folded 180 degrees back under the bar, so each lug\'s standoff hangs below the bar directly under one of the bar\'s screw holes.',
     },
     body: `
-      <p>The Button Pad prints with two integrated spacers. Bend both of them
-      <strong>downward along their weak (thin) line</strong> so they'll clip around the Buttons module
-      in the next step.</p>
+      <p>The Button Pad prints with two integrated spacers. <strong>Fold both of them back under
+      the pad along their weak (thin) line</strong>, so their standoffs sit under the bar for the
+      screws in the next step.</p>
       <div class="callout tip">
         <div class="callout-title">🗜️ Tip</div>
-        A small pair of pliers helps get a clean, controlled bend right on the scored line without
+        A small pair of pliers helps get a clean, controlled fold right on the scored line without
         stressing the rest of the part.
       </div>
       <div class="callout tip">
@@ -249,7 +249,7 @@ export const STEPS = [
     checklist: ['2× M3×10 flathead screws'],
     alt: 'The teal Button Pad, highlighted, fitted over the Modulino Buttons board with its two folded spacer lugs, screwed down by two M3x10 screws through the lugs, with everything else faded.',
     body: `
-      <p>Place the Button Pad over the Modulino Buttons and screw it down through its two bent spacers.</p>
+      <p>Place the Button Pad over the Modulino Buttons and screw it down through its two folded spacers.</p>
       <div class="callout tip">
         <div class="callout-title">🔩 Through the standoffs</div>
         Each M3×10 screw goes down through a hole in the bar <strong>and through the standoff hanging
