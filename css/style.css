@@ -380,6 +380,8 @@ pre.code {
   padding: 12px 14px;
   border-radius: 8px;
   overflow-x: auto;
+  white-space: pre-wrap;        /* long commands wrap onto more lines instead of being cut off */
+  overflow-wrap: anywhere;
   font-size: 12.8px;
   line-height: 1.55;
   margin: 0 0 16px;

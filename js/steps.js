@@ -607,11 +607,14 @@ systemctl --user start hid-injector.service retro-launcher.service</pre>
     title: 'Have fun!',
     kicker: 'Done',
     viewer: {
-      show: ['base', 'buttonPadBent', 'cover'],
-      highlight: ['base', 'buttonPadBent', 'cover'],
+      show: OVERVIEW_PARTS,
+      highlight: OVERVIEW_PARTS,
       camera: WIDE_CAM,
+      explodedCamera: EXPLODED_CAM,
+      explodable: true,
+      autoRotate: true, // same slow turntable as the welcome step
     },
-    alt: 'The finished enclosure — Base, Button Pad and Cover — shown fully assembled together.',
+    alt: 'The finished Arcade Bundle controller, fully assembled, slowly turning. Use the Assembled/Exploded toggle above the viewer to pull it apart layer by layer.',
     body: `
       <p style="text-align:center;font-size:40px;margin:6px 0;">🕹️</p>
       <p style="text-align:center;font-size:18px;font-weight:700;">Your UNO Q arcade machine is ready.</p>
