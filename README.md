@@ -1,126 +1,85 @@
 # UNO Q Arcade Bundle — Interactive Build Guide
 
-A single-page, dependency-light interactive companion to Arduino's
+An interactive companion to Arduino's
 [UNO Q Arcade Bundle](https://projecthub.arduino.cc/Arduino_Genuino/uno-q-arcade-bundle-b272c5)
-tutorial. It walks through hardware setup, 3D-printing and assembling the
-controller enclosure (with a live, rotatable 3D viewer for every assembly
-step), and the software configuration that turns it into a retro arcade
-machine.
+tutorial. It walks through the hardware setup, printing and assembling the
+controller enclosure (with a rotatable 3D model that follows every assembly
+step, plus an exploded view) and the software configuration that turns the
+UNO Q into a retro arcade controller.
 
-No build step, no dependencies to install — it's plain HTML/CSS/JS plus a
-vendored copy of [three.js](https://threejs.org/) for the 3D viewer.
+It is plain HTML, CSS and JavaScript with a vendored copy of
+[three.js](https://threejs.org/) for the 3D viewer. There is no build step.
 
-## Running it locally
+## Where the information comes from
 
-Because the page uses ES modules and loads `.stl` files, open it through a
-local server rather than as a `file://` URL (browsers block module/`fetch`
-requests from `file://`):
+| What | Source |
+|---|---|
+| Step text, parts list, tips, settings tables | Adapted from the Arduino Project Hub tutorial above, by Arduino_Genuino (GPL3+). Screw counts in the assembly steps follow the CAD assembly instead (see below); the parts list in "What you'll need" is the tutorial's own. |
+| Software screenshots (`media/`) | Taken from the same tutorial: the App Lab import menu, the HID Bridge web interface and its settings, the injector terminal and the RetroArch menus. |
+| Printed parts (`base`, `button-pad`, `cover`, `cover-with-ties`) | The STL files attached to the tutorial. They come from one assembly, so their coordinates already line up. |
+| UNO Q and Modulino models (`uno-q`, `modulino-joystick`, `modulino-movement`, `modulino-buttons`) | Arduino's official STEP files from [docs.arduino.cc](https://docs.arduino.cc/) (each product's "3D Models" download), converted to STL. |
+| Where every board and screw sits | A FreeCAD assembly (`complete-project.FCStd`) built for this guide. Each part's Placement was exported and pasted into `js/parts.js`. The FreeCAD file is not stored in this repo. |
+| M3×6 and M3×10 screws | Modelled for this guide as ISO 10642 socket countersunk screws (no thread, origin at the head's top face). |
+| `button-pad-bent.stl` | Generated from the tutorial's `button-pad.stl`: both spacer lugs folded 180° back under the bar, so the folded state can be shown. |
+| App Lab project zip | The `modulino-hid-bridge-arcade-machine.zip` from the tutorial's App Lab section. The guide links to a copy of it. |
 
-```bash
-python3 -m http.server 8420
-```
-
-Then visit `http://localhost:8420`.
-
-## Deploying to GitHub Pages
-
-1. Push this folder to a GitHub repository.
-2. In the repo's **Settings → Pages**, set the source to the branch/folder
-   containing `index.html` (root, or `/docs` if you move it there).
-3. GitHub Pages serves static files directly, so no build step is needed.
-
-## Downloads
-
-The Arduino App Lab project this guide's software steps are based on
-(`injector.py`, the HID Bridge web UI, the sketch) is published as a
-[GitHub Release](https://github.com/charlesbones/arcade-bundle/releases)
-asset rather than tracked in the repo, to keep the git history free of
-binaries. A stable link that always resolves to the latest release's copy:
-
-```
-https://github.com/charlesbones/arcade-bundle/releases/latest/download/modulino-hid-bridge-arcade-machine.zip
-```
-
-To publish a new version of it: tag a release (see below), then attach
-`modulino-hid-bridge-arcade-machine.zip` as a release asset — the link
-above keeps working as long as the filename stays the same.
+Screw counts in the 3D model (5× M3×6, 7× M3×10) are what the CAD assembly
+contains. They differ from the tutorial's bill of materials.
 
 ## Project structure
 
 ```
-index.html          Page shell + import map for three.js
-css/style.css        All styling (light/dark theme aware)
-js/steps.js          All guide content (edit this to change wording/steps)
-js/parts.js          3D PARTS registry (which STL, color, placement)
-js/viewer.js         Three.js scene: loads/positions/highlights STL parts
-js/app.js            UI wiring: navigation, progress, checklists, toolbar
-js/vendor/           Vendored three.js build + STLLoader/OrbitControls
-models/              STL geometry (see below)
+index.html             Page shell: header, step card, 3D viewer, import map for three.js
+css/style.css           All styling: the Glacier palette, light and dark themes, the immersive layout
+js/steps.js             All guide content (see "Steps" below)
+js/parts.js             The 3D parts registry (see "Parts" below)
+js/viewer.js            three.js scene: loads, places, highlights and explodes the parts
+js/app.js               UI: step navigation, progress, checklists, viewer toolbar, theme toggle
+js/vendor/              three.js (MIT), plus its STLLoader and OrbitControls
+models/                 STL geometry for every part in js/parts.js
+media/                  Software screenshots used inside the step text
+.github/workflows/      GitHub Pages workflow
 ```
 
-## About the 3D models
+### Steps (`js/steps.js`)
 
-- `base.stl`, `button-pad.stl`, `cover.stl`, `cover-with-ties.stl` are the
-  printable enclosure parts, exported together from one assembly — their
-  coordinates line up exactly, so they mate perfectly in the viewer.
-- `uno-q.stl`, `modulino-joystick.stl`, `modulino-movement.stl`,
-  `modulino-buttons.stl` are reference models converted from the official
-  STEP files on [docs.arduino.cc](https://docs.arduino.cc/) (product pages
-  for the UNO Q and each Modulino node). They come from separate CAD
-  exports, not the original enclosure assembly, so they can't mate by
-  coordinates alone. Their positions — and those of every screw — come from
-  a real FreeCAD assembly: each part is imported as a mesh, moved into place
-  with its Placement, and those numbers are copied into `js/parts.js`
-  (`placement: { pos, axis, angle }`, FreeCAD's own convention).
-- `m3x6-flathead-screw.stl` and `m3x10-flathead-screw.stl` are ISO 10642
-  socket countersunk screws (origin at the head's top face, tip pointing
-  down). `js/parts.js` places each size many times with `instances`:
-  M3×6 holds the UNO Q (2), the Modulino Buttons (2) and the Joystick (1);
-  M3×10 goes through the Button Pad's lugs (2) and closes the Cover (5).
-- `button-pad-bent.stl` is `button-pad.stl` with both spacer lugs folded
-  180° back under the bar (the pad sits rotated 45° in the case, so the fold
-  line is diagonal). Every assembled scene uses it; the prep step has an
-  As printed / Folded toggle. It was generated by a headless-Blender script
-  (hinge centre and pivot measured from the mesh) — each folded standoff lands
-  on the bar hole it sits under.
-- The `Cover with ties` variant is shown as printed (flat, unbent) — the
-  viewer doesn't simulate bending the printed tie tabs around the power
-  cable, which is a manual step described in the text.
+An ordered array of step objects grouped into phases (Get Ready, Build the
+Controller, Bring It to Life, Level Up). A step has a title, kicker, HTML
+`body`, optional `checklist` chips and an `alt` description of the 3D scene for
+screen readers. Its optional `viewer` block controls the 3D scene:
 
-## Editing the guide
+- `show`, `highlight` and `dim`: which parts appear, which are emphasized,
+  and which are shown faded as already-built context
+- `camera`: the camera position and target
+- `explodable`, `explodedCamera`, `startExploded`, `autoRotate`: the
+  Assembled/Exploded toggle, the camera used while exploded, opening already
+  exploded, and a slow turntable (used by the welcome and last steps)
+- `variants`: a toggle that swaps one part for another (As printed / Folded pad,
+  Plain cover / Cover with ties)
 
-All step text, checklists, callouts and which parts appear in the viewer
-live in `js/steps.js` as a plain array — no HTML templating system, just
-edit the strings. Each step can optionally include a `viewer` block
-(`show`/`highlight`/`dim` part keys + a camera preset) to control the 3D
-scene, or omit it entirely for a text-only step.
+A step without a `viewer` block is text only, and its card is centred.
 
-## Cutting a release
+### Parts (`js/parts.js`)
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+One entry per 3D part: the STL file, its color, and where it goes.
 
-Then on GitHub: **Releases → Draft a new release**, pick the `v1.0.0` tag,
-give it a title, drag in `modulino-hid-bridge-arcade-machine.zip` under
-**Attach binaries**, and **Publish release**. Bump the tag (`v1.0.1`, …) and
-repeat whenever the App Lab project changes.
+- `exact: true` for the printed parts, which need no transform
+- `placement: { pos, axis, angle }` for the boards and screws, in FreeCAD's
+  Placement convention (rotate about the model's own origin, then translate)
+- `instances: [...]` places one screw model several times as one group
+- `explodeLift`: how far the part rises in the exploded view. The stacking
+  order, bottom to top, is Base, boards, board screws, Button Pad, pad screws,
+  Cover, cover screws.
 
-## Related
+## Notes
 
-This guide's engine (the 3D viewer, layouts, navigation, accessibility
-wiring) has been generalized into a reusable internal platform for
-building similar guides for other hardware kits, including
-[`diy-synth`](https://github.com/charlesbones/diy-synth). This repo stays
-the canonical, independently-maintained, standalone version of this
-specific guide.
+The Cover-with-ties variant is shown as printed (flat). The viewer does not
+simulate bending the tie tabs around the power cable, which the step text
+describes.
 
 ## Credits
 
-Software screenshots (App Lab, HID Bridge, RetroArch, Bluetooth, Pure Data…) are from the original Arduino Project Hub tutorial (GPL3+), stored in `media/`.
-
-- Guide content adapted from Arduino's UNO Q Arcade Bundle tutorial by
-  Arduino_Genuino (GPL3+).
-- Reference CAD models from docs.arduino.cc.
+- Guide content and screenshots adapted from Arduino's UNO Q Arcade Bundle
+  tutorial by Arduino_Genuino (GPL3+).
+- UNO Q and Modulino reference CAD models from docs.arduino.cc.
 - Arduino, UNO and Modulino are trademarks of Arduino S.r.l.
