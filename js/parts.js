@@ -18,11 +18,13 @@
 
 export const PARTS = {
   base: {
+    label: 'Base',
     file: 'models/base.stl',
     exact: true,
     color: 0xcfcac0,
   },
   buttonPad: {
+    label: 'Button Pad',
     file: 'models/button-pad.stl',
     exact: true,
     color: 0x2f8f8a,
@@ -35,18 +37,21 @@ export const PARTS = {
   // Used for every assembled scene; the flat original is only the
   // "As printed" side of the prep step's toggle.
   buttonPadBent: {
+    label: 'Button Pad',
     file: 'models/button-pad-bent.stl',
     exact: true,
     color: 0x2f8f8a,
     explodeLift: 75,
   },
   cover: {
+    label: 'Cover',
     file: 'models/cover.stl',
     exact: true,
     color: 0xe4e0d4,
     explodeLift: 115,
   },
   coverTies: {
+    label: 'Cover',
     file: 'models/cover-with-ties.stl',
     exact: true,
     color: 0xe4e0d4,
@@ -54,24 +59,28 @@ export const PARTS = {
   },
   // -- electronics: real placements from the FreeCAD assembly -------------
   unoQ: {
+    label: 'Arduino UNO Q',
     explodeLift: 20,
     file: 'models/uno-q.stl',
     color: 0x1c7a3e,
     placement: { pos: [431, -111, -15], axis: [0, 0, 1], angle: 0 },
   },
   modButtons: {
+    label: 'Modulino Buttons',
     explodeLift: 20,
     file: 'models/modulino-buttons.stl',
     color: 0x2f6fb0,
     placement: { pos: [51, -37, 2], axis: [0, 0, 1], angle: 45 },
   },
   modMovement: {
+    label: 'Modulino Movement',
     explodeLift: 20,
     file: 'models/modulino-movement.stl',
     color: 0xb0562f,
     placement: { pos: [-21, -30, 20], axis: [-1, 0, 0], angle: 90 },
   },
   modJoystick: {
+    label: 'Modulino Joystick',
     explodeLift: 20,
     file: 'models/modulino-joystick.stl',
     color: 0x8a2fb0,
@@ -81,6 +90,7 @@ export const PARTS = {
   // -- screws (origin = head top centre, tip toward -Z) ---------------------
   // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 1 holds the Joystick
   screwsUnoQ: {
+    label: 'M3×6 screws · UNO Q',
     explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
@@ -90,6 +100,7 @@ export const PARTS = {
     ],
   },
   screwsButtons: {
+    label: 'M3×6 screws · Buttons',
     explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
@@ -99,6 +110,7 @@ export const PARTS = {
     ],
   },
   screwsJoystick: {
+    label: 'M3×6 screw · Joystick',
     explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
@@ -108,6 +120,7 @@ export const PARTS = {
   },
   // M3x10: 2 go through the Button Pad's spacer lugs, 5 close the Cover
   screwsPad: {
+    label: 'M3×10 screws · Button Pad',
     file: 'models/m3x10-flathead-screw.stl',
     color: 0xb8bec4,
     explodeLift: 95, // rides above the Button Pad
@@ -117,6 +130,7 @@ export const PARTS = {
     ],
   },
   screwsCover: {
+    label: 'M3×10 screws · Cover',
     file: 'models/m3x10-flathead-screw.stl',
     color: 0xb8bec4,
     explodeLift: 135, // rides above the Cover
