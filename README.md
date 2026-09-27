@@ -23,8 +23,10 @@ It is plain HTML, CSS and JavaScript with a vendored copy of
 | `button-pad-bent.stl` | Generated from the tutorial's `button-pad.stl`: both spacer lugs folded 180° back under the bar, so the folded state can be shown. |
 | App Lab project zip | The `modulino-hid-bridge-arcade-machine.zip` from the tutorial's App Lab section. The guide links to a copy of it. |
 
-Screw counts in the 3D model (5× M3×6, 7× M3×10) are what the CAD assembly
-contains. They differ from the tutorial's bill of materials.
+Screw counts in the 3D model (12× M3×6, 2× M3×10) are what the CAD assembly
+contains. They differ from the tutorial's bill of materials. Only the 2
+screws through the Button Pad's spacer lugs are M3×10 — every other screw
+in the build, including the Cover, is M3×6.
 
 ## Project structure
 

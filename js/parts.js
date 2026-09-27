@@ -10,8 +10,10 @@
 // with tools/fc_export_placements.py in the private workshop repo. Each
 // `placement` is a FreeCAD Placement: rotate the STL about its own origin,
 // then translate (see viewer.js). Screws are one model placed many times
-// via `instances`; the assembly held two duplicate screws stacked at the same
-// spot ((63,3,3) and (76,-1,15.5)) which are listed once here.
+// via `instances`. Re-exported 2026-09-27 after the FreeCAD assembly was
+// corrected: only 2 screws in the whole build are M3x10 (both through the
+// Button Pad's spacer lugs) -- the Cover and Joystick, previously M3x10/1x
+// M3x6 respectively, are M3x6 like everything else.
 
 // Exploded view (overview step) stacks bottom to top, in Z:
 //   base 0 | boards 20 | board screws 40 | pad 75 | pad screws 95 | cover 115 | cover screws 135
@@ -88,7 +90,8 @@ export const PARTS = {
   },
 
   // -- screws (origin = head top centre, tip toward -Z) ---------------------
-  // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 1 holds the Joystick
+  // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 2 hold the Joystick,
+  // 6 close the Cover
   screwsUnoQ: {
     label: 'M3×6 screws · UNO Q',
     explodeLift: 40,
@@ -110,15 +113,17 @@ export const PARTS = {
     ],
   },
   screwsJoystick: {
-    label: 'M3×6 screw · Joystick',
+    label: 'M3×6 screws · Joystick',
     explodeLift: 40,
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
       { pos: [-73, -22, 2] },
+      { pos: [-40, -6.4, 2.5] },
     ],
   },
-  // M3x10: 2 go through the Button Pad's spacer lugs, 5 close the Cover
+  // M3x10: only these 2, through the Button Pad's spacer lugs. Every other
+  // fastener in the assembly is M3x6.
   screwsPad: {
     label: 'M3×10 screws · Button Pad',
     file: 'models/m3x10-flathead-screw.stl',
@@ -130,16 +135,17 @@ export const PARTS = {
     ],
   },
   screwsCover: {
-    label: 'M3×10 screws · Cover',
-    file: 'models/m3x10-flathead-screw.stl',
-    color: 0xb8bec4,
+    label: 'M3×6 screws · Cover',
     explodeLift: 135, // rides above the Cover
+    file: 'models/m3x6-flathead-screw.stl',
+    color: 0xb8bec4,
     instances: [
-      { pos: [-33, -31, 15.5] },
-      { pos: [-34, 26, 15.5] },
-      { pos: [33, -31, 15.5] },
-      { pos: [34, 26, 15.5] },
-      { pos: [76, -1, 15.5] },
+      { pos: [-32, -30.4, 16.5] },
+      { pos: [-33, 26.1, 16.5] },
+      { pos: [32, -30.4, 16.5] },
+      { pos: [33, 26.1, 16.5] },
+      { pos: [77, -1.4, 16.5] },
+      { pos: [-76, -1.4, 16.5] },
     ],
   },
 };

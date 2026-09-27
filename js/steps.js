@@ -329,7 +329,7 @@ export const STEPS = [
       camera: LEFT_CAM,
     },
     checklist: ['Screws for the Joystick mount'],
-    alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base with one M3x6 screw, with everything placed so far shown faded.',
+    alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base with two M3x6 screws, with everything placed so far shown faded.',
     body: `
       <p>Screw the Modulino Joystick in on the <strong>left side</strong> of the Base. Double-check the
       little XY-axis graphic printed on the joystick module lines up the way you expect before you
