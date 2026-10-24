@@ -328,7 +328,7 @@ export const STEPS = [
       dim: ['base', 'unoQ', 'screwsUnoQ', 'modButtons', 'screwsButtons', 'buttonPadBent', 'screwsPad', 'modMovement'],
       camera: LEFT_CAM,
     },
-    checklist: ['Screws for the Joystick mount'],
+    checklist: ['2× M3×6 flathead screws'],
     alt: 'The purple Modulino Joystick, highlighted, mounted on the left side of the Base with two M3x6 screws, with everything placed so far shown faded.',
     body: `
       <p>Screw the Modulino Joystick in on the <strong>left side</strong> of the Base. Double-check the
@@ -352,7 +352,7 @@ export const STEPS = [
       ],
       defaultVariant: 'cover',
     },
-    checklist: ['Cover fasteners'],
+    checklist: ['6× M3×6 flathead screws'],
     alt: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
     altVariants: {
       cover: 'A top-down view of the highlighted plain Cover fitted onto the Base, with the electronics faded underneath and the Button Pad poking through a cutout in the Cover.',
