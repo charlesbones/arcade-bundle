@@ -21,7 +21,7 @@ It is plain HTML, CSS and JavaScript with a vendored copy of
 | Where every board and screw sits | A FreeCAD assembly (`complete-project.FCStd`) built for this guide. Each part's Placement was exported and pasted into `js/parts.js`. The FreeCAD file is not stored in this repo. |
 | M3×6 and M3×10 screws | Modelled for this guide as ISO 10642 socket countersunk screws (no thread, origin at the head's top face). |
 | `button-pad-bent.stl` | Generated from the tutorial's `button-pad.stl`: both spacer lugs folded 180° back under the bar, so the folded state can be shown. |
-| App Lab project zip | The `modulino-hid-bridge-arcade-machine.zip` from the tutorial's App Lab section. The guide links to a copy of it. |
+| App Lab project zip | The `modulino-hid-bridge-arcade-machine.zip` from the tutorial's App Lab section. The guide links to the file Arduino hosts for the tutorial. |
 
 Screw counts in the 3D model (12× M3×6, 2× M3×10) are what the CAD assembly
 contains. They differ from the tutorial's bill of materials. Only the 2

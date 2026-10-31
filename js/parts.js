@@ -90,6 +90,8 @@ export const PARTS = {
   },
 
   // -- screws (origin = head top centre, tip toward -Z) ---------------------
+  // Screw heads rest 1.3-1.5 above the surface they clamp: the holes are plain (no
+  // countersink), so the cone head sits on top instead of sinking into the part.
   // M3x6: 2 hold the UNO Q, 2 hold the Modulino Buttons, 2 hold the Joystick,
   // 6 close the Cover
   screwsUnoQ: {
@@ -98,8 +100,8 @@ export const PARTS = {
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
-      { pos: [31, 9, 4] },
-      { pos: [-20, -24, 4] },
+      { pos: [31, 9, 3.4] },
+      { pos: [-20, -24, 3.4] },
     ],
   },
   screwsButtons: {
@@ -108,8 +110,8 @@ export const PARTS = {
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
-      { pos: [39, -19, 3] },
-      { pos: [63, 3, 3] },
+      { pos: [39, -19, 3.5] },
+      { pos: [63, 3, 3.5] },
     ],
   },
   screwsJoystick: {
@@ -118,7 +120,7 @@ export const PARTS = {
     file: 'models/m3x6-flathead-screw.stl',
     color: 0xb8bec4,
     instances: [
-      { pos: [-73, -22, 2] },
+      { pos: [-73, -22, 2.5] },
       { pos: [-40, -6.4, 2.5] },
     ],
   },
@@ -130,8 +132,8 @@ export const PARTS = {
     color: 0xb8bec4,
     explodeLift: 95, // rides above the Button Pad
     instances: [
-      { pos: [73, -8, 8] },
-      { pos: [51, -30, 7] },
+      { pos: [73, -8, 7.5] },
+      { pos: [51, -30, 7.5] },
     ],
   },
   screwsCover: {

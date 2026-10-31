@@ -92,13 +92,11 @@ export const STEPS = [
         <li>Create a <strong>password</strong> for the board &mdash; you'll need it again later.</li>
         <li>Download the project zip:
           <div>
-            <a class="dl-btn" href="https://github.com/charlesbones/arcade-bundle/releases/latest/download/modulino-hid-bridge-arcade-machine.zip" download>
-              ⬇ Download modulino-hid-bridge-arcade-machine.zip <span class="size">(~48 KB)</span>
+            <a class="dl-btn" href="https://projects.arduinocontent.cc/c957a093-4bd5-477b-ae65-1e5ed7024c56.zip" download>
+              ⬇ Download modulino-hid-bridge-arcade-machine.zip
             </a>
           </div>
-          Mirrored from the <strong>Arduino App Lab</strong> section of the original tutorial &mdash;
-          see the <a href="https://github.com/charlesbones/arcade-bundle/releases" target="_blank" rel="noopener">Releases page</a>
-          for other versions.
+          This link points at the file Arduino hosts for the original tutorial.
         </li>
         <li>Open <strong>Arduino App Lab</strong> and go to <strong>My Apps</strong>.</li>
         <!-- TODO(gif): this step is a good candidate for a short screen
