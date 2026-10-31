@@ -151,7 +151,7 @@ export const STEPS = [
       </div>
       <h3 style="margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)">Fasteners</h3>
       <div class="card-grid">
-        <div class="mini-card"><span class="qty">14×</span><span class="label">M3×6 flathead screws</span></div>
+        <div class="mini-card"><span class="qty">12×</span><span class="label">M3×6 flathead screws (14 with the tie cover)</span></div>
         <div class="mini-card"><span class="qty">2×</span><span class="label">M3×10 flathead screws</span></div>
       </div>
       <h3 style="margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)">Tools &amp; printing</h3>
@@ -291,12 +291,6 @@ export const STEPS = [
         <div class="callout-title">🔩 Through the standoffs</div>
         Each M3×10 screw goes down through a hole in the bar <strong>and through the standoff hanging
         underneath it</strong> &mdash; that's why the spacers are folded first.
-      </div>
-      <div class="callout warn">
-        <div class="callout-title">⚠️ Screw size note</div>
-        The original tutorial text says "two M3×8 screws" in this step, while its own bill of materials
-        lists <strong>2× M3×10</strong> flathead screws as the odd-ones-out (everything else is M3×6).
-        Use the M3×10s from your kit here &mdash; they're almost certainly what's meant.
       </div>
     `,
   },
